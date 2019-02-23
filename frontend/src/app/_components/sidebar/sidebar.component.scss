@@ -1,0 +1,98 @@
+@import "../../_styles/variables";
+ul {
+	padding: 0;
+}
+
+
+.main-nav,
+.sub-nav {
+	margin-top: 1.5rem;
+	&>li {
+		margin-top: 1.5rem;
+		&>a {
+			display: block;
+			text-transform: uppercase;
+			color: $white;
+			border-bottom: 2px solid rgba($primary-color, .5);
+			font-size: 1rem;
+			padding: 0.75rem 1.25rem;
+			letter-spacing: .1rem;
+			cursor: pointer;
+		}
+		&>ul>li {
+			padding: 0;
+			display: block;
+			color: $primary-color;
+			cursor: pointer;
+			background-color: rgba($black, .5);
+			transition: 150ms;
+
+			&.parentLink {
+				&::after {
+					font-size: 0.55rem;
+				}
+			}
+
+			&>a {
+				padding: 1rem 1.2rem 1rem 2.2rem;
+				border-bottom: 1px solid rgba($primary-color, .4);
+				display: block;
+				&:hover {
+					color: $white;
+				}
+			}
+			&>ul>li {
+				color: $lightBlue;
+
+				cursor: pointer;
+				background-color: rgba($black, 0.8);
+				transition: 150ms;
+				&.parentLink {
+					&::after {
+						top: 25px;
+						font-size: 0.45rem;
+					}
+				}
+				&>a {
+					padding: 1rem 1.2rem 1rem 3rem;
+					border-bottom: 1px solid rgba($lightBlue, .6);
+					display: block;
+					font-size: 0.6rem;
+					&:hover {
+						color: $white;
+					}
+				}
+				&>ul>li {
+					color: rgba($primary-color, .8);
+					border-bottom: 1px solid rgba($lightBlue, .4);
+					cursor: pointer;
+					background-color: rgba($black, 1);
+					transition: 150ms;
+
+					&>a {
+						padding: 1rem 1.2rem 1rem 4rem;
+						display: block;
+						font-size: 0.6rem;
+						&:hover {
+							color: $white;
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+.parentLink {
+	position: relative;
+
+	&:after {
+		position: absolute;
+		right: 20px;
+		top: 15px;
+		content: "\25bc";
+		transform: scale(1.8, 0.8);
+		font-size: 0.6rem;
+		opacity: 0.7;
+	}
+}

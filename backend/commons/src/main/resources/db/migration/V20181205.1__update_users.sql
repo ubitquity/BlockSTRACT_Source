@@ -1,0 +1,1 @@
+UPDATE users SET role = 'ABSTRACTOR' WHERE role = 'USER'

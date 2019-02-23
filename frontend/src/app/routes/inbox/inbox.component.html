@@ -1,0 +1,61 @@
+<div class="main-wrap d-flex flex-column h-100">
+	<div [ngClass]="{'d-none' : currentCoversationId}" class="d-lg-flex header-block flex-column mb-lg-4">
+		<h2 class="bigger">Inbox</h2>
+		<!-- <div class="d-lg-none btn-group w-100 mb-4 container">
+			<button class="btn col-4 px-0 btn-outline-primary active">Abstractors</button>
+			<button class="btn col-4 px-0 btn-outline-primary">Customer</button>
+			<button class="btn col-4 px-0 btn-outline-primary">All</button>
+		</div> -->
+		<button (click)="newMessage()" class="d-lg-none  btn btn-primary mb-3">New Message</button>
+	</div>
+	<div [ngClass]="{'p-0 px-lg-3' : currentCoversationId}" class="container flex-grow-1 d-flex">
+		<div class="row no-gutters mb-lg-3 flex-grow-1">
+
+			<div class="col-lg-3 bg-white shadow h-100 d-none d-lg-block  mr-lg-2">
+				<!-- <div class="btn-group w-100 p-3">
+					<button class="btn col-4 px-0 btn-outline-primary active">Abstractors</button>
+					<button class="btn col-4 px-0 btn-outline-primary">Customer</button>
+					<button class="btn col-4 px-0 btn-outline-primary">All</button>
+				</div> -->
+				<div class="mt-3 d-flex justify-content-center">
+					<button (click)="newMessage()" class="btn btn-primary mt-3 w-100 mx-3">New Message</button>
+				</div>
+
+				<ul class="contact-list my-4">
+					<li (click)="showChat(item.orderId)" *ngFor="let item of list" [ngClass]="{'active' : item.orderId == currentCoversationId}">
+						<div>{{item.user}}</div>
+						<div class="small">{{item.orderNumber}}</div>
+					</li>
+				</ul>
+			</div>
+			<div class="col-lg my-3 my-lg-0 d-flex flex-column">
+				<div *ngIf="!currentCoversationId" class="bg-white p-lg-4 shadow w-100 flex-grow-1">
+					<ng-container *ngIf="list?.length">
+						<div *ngFor="let item of list" (click)="showChat(item.orderId)" [ngClass]="{'unreaded' : item.hasNewMessages}" class="inbox-excerpt cursor-pointer ">
+							<div class="py-4 pl-lg-5 pr-3">
+								<div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center mb-2">
+									<h4 class="mb-0">{{item.user}}</h4>
+									<div class="text-nowrap">{{item.orderNumber}}</div>
+								</div>
+								<div class="d-flex flex-column flex-sm-row no-gutters justify-content-between">
+									<p class="order-2 order-sm-1">{{item.lastMessageText | excerpt: 20}}</p>
+									<small class="order-1 order-sm-2 text-nowrap ml-sm-3">{{item.lastMessageTime | date: 'MM/dd/yyyy'}}</small>
+								</div>
+
+							</div>
+						</div>
+					</ng-container>
+					<div *ngIf="!data" class=" p-4 p-sm-5 flex-grow-1 mb-5 text-center d-flex flex-column justify-content-center align-items-center">
+						<p>No messages</p>
+					</div>
+
+
+				</div>
+
+				<app-conversation #chat (refreshList)="getConversations()" [ngClass]="{'d-none' : !currentCoversationId}"></app-conversation>
+			</div>
+		</div>
+	</div>
+
+
+</div>

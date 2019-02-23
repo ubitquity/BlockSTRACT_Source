@@ -1,0 +1,61 @@
+@import "../../_styles/variables";
+
+:host {
+	display: block;
+	&.no-border {
+		h1 {
+			border-bottom: 0;
+			margin-bottom: 0;
+		}
+		.breadcrumb {
+			border-bottom: 0;
+			padding-bottom: .5rem;
+		}
+	}
+
+	&.breadcrumbs {
+		padding-top: 1rem;
+	}
+}
+
+h1 {
+	padding-bottom: 2rem;
+	padding-top: 1rem;
+}
+h3 {
+	//padding-top: 1rem;
+}
+h1, h3 {
+	margin-bottom: 2rem;
+	//pointer-events: none;
+	cursor: default;
+	.backHome {
+		cursor: pointer;
+		opacity: 0;
+		transition: 300ms;
+		font-size: 1rem;
+		margin-left: 1rem;
+		padding-bottom: 3px;
+	}
+	&:hover {
+		.backHome {
+			opacity: .4;
+			border-bottom: 2px solid rgba($darkGray, .1);
+			&:hover {
+				opacity: 1;
+				color: $primary-color;
+				border-bottom: 2px solid rgba($primary-color, 1);
+			}
+		}
+	}
+}
+
+.breadcrumb {
+	margin-top: -2rem;
+	background-color: transparent;
+	margin-bottom: 2rem;
+	padding-left: 0;
+	border-bottom: 1px solid rgba($darkerGray, .1);
+	border-radius: 0;
+	padding-bottom: 1.5rem;
+}

@@ -1,0 +1,1 @@
+ALTER TABLE orders ADD COLUMN internal_status character varying(50) NOT NULL DEFAULT 'UNCLAIMED';

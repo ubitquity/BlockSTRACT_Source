@@ -1,0 +1,25 @@
+<div class="container-fluid" id="wrapper">
+	<div class="row">
+		<aside class="col-sm-3 sidebar">
+			<h1 class="site-title"><a routerLink="/home"><em class="fa fa-chevron-left"></em> webseed</a></h1>
+
+			<ul class="nav nav-pills flex-column sidebar-nav">
+				<li class="nav-item"><a class="nav-link" [routerLink]="['./home']"><em class="fa fa-dashboard"></em>
+					Home</a></li>
+				<li class="nav-item"><a class="nav-link" [routerLink]="['./buttons']"><em class="fa fa-hand-o-up"></em>
+					Buttons</a></li>
+				<li class="nav-item"><a class="nav-link" [routerLink]="['./forms']"><em
+					class="fa fa-pencil-square-o"></em> Forms</a></li>
+				<li class="nav-item"><a class="nav-link" [routerLink]="['./tables']"><em class="fa fa-table"></em>
+					Tables</a></li>
+				<li class="nav-item"><a class="nav-link" [routerLink]="['./widgets']"><em class="fa fa-calendar-o"></em>
+					Widgets</a></li>
+				<li class="nav-item"><a class="nav-link" [routerLink]="['./cards']"><em class="fa fa-clone"></em> Cards</a>
+				</li>
+			</ul>
+		</aside>
+		<main class="col-sm-9 ml-auto pt-3">
+			<router-outlet></router-outlet>
+		</main>
+	</div>
+</div>

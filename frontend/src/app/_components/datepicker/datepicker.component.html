@@ -1,0 +1,14 @@
+<ngb-datepicker #dp class="bg-white" ngModel (ngModelChange)="onDateChange($event)"[dayTemplate]="t">
+</ngb-datepicker>
+
+<ng-template #t let-date="date" let-currentMonth="currentMonth" let-focused="focused">
+	<span class="custom-day"
+		[class.focused]="focused"
+		[class.range]="isFrom(date) || isTo(date) || isInside(date) || isHovered(date)"
+		[class.faded]="isHovered(date) || isInside(date)"
+		[class.muted]="date.month !== currentMonth"
+		(mouseenter)="hoveredDate = date"
+		(mouseleave)="hoveredDate = null">
+	{{ date.day }}
+	</span>
+</ng-template>

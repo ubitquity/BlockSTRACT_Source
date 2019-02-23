@@ -1,0 +1,78 @@
+@import "../../../_styles/variables";
+@import '~bootstrap/scss/bootstrap-grid';
+
+.tab-links {
+	.disabled {
+		color: $gray-500 !important;
+	}
+}
+
+@media screen and (max-width: 375px) {
+	.tab-links {
+		li {
+			margin: 0 5px;
+			font-size: 0.75rem;
+
+			&:last-child, &:first-child {
+				margin: 0;
+			}
+		}
+	}
+
+}
+@media screen and (min-width: 375px) {
+	.tab-links {
+		li {
+			margin: 0 0.5rem;
+		}
+	}
+}
+@include media-breakpoint-up(sm) {
+	.header-block h2 {
+		padding: 1rem 0;
+	}
+}
+
+@include media-breakpoint-down(xs) {
+	.header-block h2 {
+		padding: 0.5rem 0;
+	}
+}
+
+
+.badge.order-status {
+	font-size: 14px;
+	border-radius: 50px;
+	font-weight: unset;
+	padding: 0.25em 1em 0.3rem;
+	background-color: $gray-500;
+	color: $secondary;
+
+	&.badge-primary {
+		color: $white;
+	}
+
+	&.danger{
+		color: $white;
+		background-color: $red;
+	}
+
+	&.warning{
+		color: $white;
+		background-color: rgba($orange, 0.9);
+	}
+
+	&.open {
+		background-color: #c9ef94;
+		color: rgba(0, 0, 0, 0.6);
+	}
+	&.pending {
+		background-color: $danger;
+		color: $white;
+	}
+	&.success {
+		background-color: $green;
+		color: $white;
+
+	}
+}

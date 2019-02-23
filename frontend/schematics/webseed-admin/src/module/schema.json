@@ -1,0 +1,19 @@
+{
+	"$schema": "http://json-schema.org/schema",
+	"id": "Module",
+	"title": "General module",
+	"type": "object",
+	"properties": {
+		"name": {
+			"type": "string"
+		},
+		"path": {
+			"type": "string",
+			"format": "path",
+			"visible": false
+		}
+	},
+	"required": [
+		"name"
+	]
+}

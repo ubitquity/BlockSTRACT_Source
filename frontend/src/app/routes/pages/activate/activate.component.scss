@@ -1,0 +1,22 @@
+@import "../../../_styles/variables.scss";
+
+:host {
+	display: block;
+    height: 100%;
+    width: 100%;
+    background-color: $gray-100;
+}
+
+.login-block {
+  height: 100vh;
+  overflow: hidden;
+}
+
+.card {
+	border: 1px solid rgba($black, 0.2);
+	border-radius: 0;
+
+	.form-control  {
+		border: 1px solid rgba($black, 0.2);
+	}
+}

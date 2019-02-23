@@ -1,0 +1,128 @@
+<!--preload graphics to prevent lagging-->
+<div class="d-none">
+	<img src="assets/graphics/Accepted.svg">
+	<img src="assets/graphics/Revieving.svg">
+	<img src="assets/graphics/InProgress.svg">
+	<img src="assets/graphics/Completed.svg">
+	<img src="assets/graphics/Cancelled.svg">
+</div>
+<div class="main-wrap d-flex flex-column h-100">
+	<div class="header-block">
+		<div class="d-block d-lg-none container p-0 position-absolute ">
+			<span class="arrow-back" [routerLink]="prevUrl">
+				<fa-icon class="" [icon]="faAngleLeft"></fa-icon>
+			</span>
+		</div>
+		<h2>Tracker</h2>
+	</div>
+	<div class="container flex-grow-1 d-flex flex-column">
+		<section class="d-md-flex align-items-center mt-3">
+			<div class="ml-auto mb-3 ">
+				<div class="d-flex input-group input-group-sm bg-lightGray align-items-center text-nowrap">
+					<fa-icon class="ml-2 mr-1 d-none d-md-block text-secondary cursor-pointer" (click)="filter({search: search})" [icon]="faSearch"></fa-icon>
+					<input type="text" class="flex-fill text-secondary border-0 px-3 py-2 px-md-2 small bg-transparent outline-0" placeholder="Search"
+					 [(ngModel)]="search" (keydown)="filter({search: search}, $event)">
+					 <button (click)="filter({search: search})" class="btn d-md-none btn-primary"><fa-icon class="text-white" [icon]="faSearch"></fa-icon></button>
+				</div>
+			</div>
+		</section>
+		<section class="content flex-grow-1 d-flex flex-column">
+			<ng-container *ngIf="!showOrders">
+				<div class="flex-grow-1 mb-5 shadow bg-white d-flex align-items-center justify-content-center text-center">
+					<div class="p-3">
+						<div class="font-weight-bold">You do not have any orders.</div>
+						<div>Import from Qualia to see your orders</div>
+					</div>
+
+				</div>
+
+			</ng-container>
+			<div class="" *ngIf="orders?.content?.length">
+				<ngx-datatable #trackerTable [scrollbarH]="scrollBarHorizontal" class="appstract mb-3 bg-white expandable
+				"
+				 [rows]="orders.content" [columns]="tableColumns" columnMode="force" [footerHeight]="40" selectionType="row"
+				 [selected]="selected" (select)="toggleExpandRow($event)" [externalSorting]="true" (sort)="onSort($event)">
+					<ngx-datatable-row-detail [rowHeight]="'auto'" #myDetailRow>
+
+						<ng-template let-row="row" let-expanded="expanded" ngx-datatable-row-detail-template>
+							<div class="d-flex">
+								<img *ngIf="row.status === 'ACCEPTED'" src="assets/graphics/Accepted.svg">
+								<img *ngIf="row.status === 'PENDING'" src="assets/graphics/InProgress.svg">
+								<!-- <img *ngIf="row.status === 'PENDING'" src="assets/graphics/Revieving.svg"> -->
+								<img *ngIf="row.status === 'COMPLETED'" src="assets/graphics/Completed.svg">
+
+								<ng-container>
+									<img *ngIf="!(row.status === 'ACCEPTED' || row.status === 'PENDING' || row.status === 'COMPLETED')" src="assets/graphics/Cancelled.svg">
+								</ng-container>
+								<div class="d-flex flex-column justify-content-between text-primary ml-3" style="font-weight: 600">
+									<div class="mt-1">Order Accepted</div>
+									<div> In Progress</div>
+									<div> Reviewing</div>
+									<div class="mb-1">Completed</div>
+								</div>
+							</div>
+						</ng-template>
+
+
+					</ngx-datatable-row-detail>
+					<ngx-datatable-footer>
+						<ng-template ngx-datatable-footer-template let-rowCount="rowCount" let-pageSize="pageSize" let-selectedCount="selectedCount"
+						 let-curPage="curPage" let-offset="offset">
+							<div class="d-flex h-100 justify-content-between w-100 pl-md-3">
+								<div class="d-flex align-items-center">
+									<div class="border-right d-md-flex align-items-center h-100">
+										<div class="d-none d-md-block">Items per page: </div>
+										<ng-select class="footer-select" [items]="options.sizes" bindLabel="label" [clearable]="false" placeholder="10"
+										 [searchable]="false" (change)="getOrders(true)" [(ngModel)]="size">
+										</ng-select>
+									</div>
+									<div class="ml-2 text-nowrap">{{size.value * page - size.value + 1}}-{{orders.last ? totalElements :
+										(size.value * page)}}
+										of {{totalElements}} items</div>
+								</div>
+								<div class="d-flex align-items-center h-100">
+									<div class="d-none d-md-block mr-3">
+										{{page}} of {{totalPages || 1}} pages
+									</div>
+									<div class="d-flex align-items-center h-100">
+										<button [disabled]="page <= 1" (click)="setPage('prev')" class="pagination-btn left">
+											<fa-icon class="" [icon]="faAngleLeft"></fa-icon>
+										</button>
+										<ng-select class="footer-select" [clearable]="false" placeholder="10" [searchable]="false" (change)="getOrders()"
+										 [(ngModel)]="page">
+											<ng-option *ngFor="let i of pages" [value]="i">{{i}}</ng-option>
+										</ng-select>
+										<button [disabled]="page >= totalPages" (click)="setPage('next')" class="pagination-btn right">
+											<fa-icon class="" [icon]="faAngleRight"></fa-icon>
+										</button>
+									</div>
+								</div>
+							</div>
+						</ng-template>
+					</ngx-datatable-footer>
+				</ngx-datatable>
+			</div>
+			<ng-template #statusColumn let-row="row" let-value="value">
+				<span [ngClass]="{'text-blue': row.status === 'SUBMITTED', 'text-danger': row.status === 'PENDING', 'text-success': row.status === 'OPEN', 'text-primary': row.status === 'COMPLETED'}">
+					{{row.status | titlecase}}
+				</span>
+			</ng-template>
+			<ng-template #buttonsColumn let-row="row" let-value="value">
+				<fa-icon class="" [icon]="faEllipsisH"></fa-icon>
+			</ng-template>
+
+			<ng-template #priceColumn let-row="row" let-value="value">
+				${{row.quotedPrice | number: '1.2'}}
+			</ng-template>
+
+			<ng-template #expandColumn let-row="row" let-expanded="expanded">
+				<a class="h2 mb-0" href="javascript:void(0)" [class.datatable-icon-right]="!expanded" [class.datatable-icon-down]="expanded"
+				 title="Expand/Collapse Row">
+
+				</a>
+			</ng-template>
+		</section>
+	</div>
+
+
+</div>

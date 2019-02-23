@@ -1,0 +1,12 @@
+<ul class="list-group list-group-flush main-nav mb-5">
+	<ng-template #recursiveMenu let-menus>
+		<li *ngFor="let menu of menus" [class.parentLink]="menu.children">
+			<a (click)="toggleVisibility(menu)">{{menu.slug}}</a>
+			<!-- <a (click)="isCurrent(menu)">{{menu.slug}}</a> -->
+			<ul *ngIf="menu.children && menu.visible">
+				<ng-container *ngTemplateOutlet="recursiveMenu; context:{ $implicit: menu.children }"></ng-container>
+			</ul>
+		</li>
+	</ng-template>
+	<ng-container *ngTemplateOutlet="recursiveMenu; context:{ $implicit: menus }"></ng-container>
+</ul>

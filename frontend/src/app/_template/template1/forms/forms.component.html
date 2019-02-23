@@ -1,0 +1,197 @@
+<header class="page-header justify-center">
+	<h1>Form Elements</h1>
+</header>
+
+<section class="row">
+	<div class="col-sm-12">
+		<section class="row">
+			<div class="col-12">
+				<div class="card mb-4">
+					<div class="card-block">
+						<h3 class="card-title">Inputs</h3>
+						<form class="form" action="#">
+							<div class="form-group row">
+								<label class="col-md-3 col-form-label">Default input field</label>
+								<div class="col-md-9">
+									<input type="text" name="regular" class="form-control">
+								</div>
+							</div>
+							<div class="form-group row">
+								<label class="col-md-3 col-form-label">Password</label>
+								<div class="col-md-9">
+									<input class="form-control" type="password" name="pass">
+								</div>
+							</div>
+							<div class="form-group row">
+								<label class="col-md-3 col-form-label">With placeholder</label>
+								<div class="col-md-9">
+									<input class="form-control" type="text" name="placeholder"
+										   placeholder="placeholder">
+								</div>
+							</div>
+							<div class="form-group row">
+								<label class="col-md-3 col-form-label">Disabled field</label>
+								<div class="col-md-9">
+									<input type="text" name="disabled" disabled="disabled" value="disabled"
+										   class="form-control">
+								</div>
+							</div>
+							<div class="form-group row">
+								<label class="col-md-3 col-form-label">Read only field</label>
+								<div class="col-md-9">
+									<input class="form-control" type="text" name="readonly" readonly=""
+										   value="read only">
+								</div>
+							</div>
+							<div class="form-group row">
+								<label class="col-md-3 col-form-label">Help text</label>
+								<div class="col-md-9">
+									<input type="text" name="regular" class="form-control"><span class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label class="col-md-3 col-form-label">Predefined value</label>
+								<div class="col-md-9">
+									<input type="text" name="regular" value="http://" class="form-control">
+								</div>
+							</div>
+							<div class="form-group row">
+								<label class="col-md-3 col-form-label">Custom Select</label>
+								<div class="col-md-9">
+									<select class="custom-select form-control">
+										<option selected>Open this select menu</option>
+										<option value="1">One</option>
+										<option value="2">Two</option>
+										<option value="3">Three</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label class="col-md-3 col-form-label">Valid Input</label>
+								<div class="col-md-9">
+									<input type="text" class="form-control is-valid" id="inputHorizontalSuccess">
+								</div>
+							</div>
+							<div class="form-group row">
+								<label class="col-md-3 col-form-label">Danger</label>
+								<div class="col-md-9">
+									<input type="text" class="form-control is-invalid" id="inputHorizontalDnger">
+									<div class="invalid-feedback">Sorry, that username's taken. Try another?</div>
+									<small class="form-text text-muted">Example help text that remains unchanged.
+									</small>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section class="row">
+			<div class="col-12">
+				<div class="card mb-4">
+					<div class="card-block">
+						<h3 class="card-title">Input Groups</h3>
+						<div class="row">
+							<div class="col-lg-4 col-sm-4">
+								<div class="input-group"><span class="input-group-addon">@</span>
+									<input type="text" class="form-control" placeholder="Username">
+								</div>
+							</div>
+							<div class="col-lg-4 col-sm-4">
+								<div class="input-group">
+									<input type="text" class="form-control"><span class="input-group-addon">.00</span>
+								</div>
+							</div>
+							<div class="col-lg-4 col-sm-4">
+								<div class="input-group"><span class="input-group-addon">$</span>
+									<input type="text" class="form-control"><span class="input-group-addon">.00</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section class="row">
+			<div class="col-12">
+				<div class="card mb-4">
+					<div class="card-block">
+						<h3 class="card-title">Button Addons</h3>
+						<div class="row">
+							<div class="col-lg-6 mb-sm-4 mb-lg-0">
+								<div class="input-group"><span class="input-group-btn">
+													<button class="btn btn-primary" type="button" title="">Go!</button>
+													</span>
+									<input type="text" class="form-control">
+								</div>
+							</div>
+							<div class="col-lg-6">
+								<div class="input-group">
+									<input type="text" class="form-control"><span class="input-group-btn">
+														<button class="btn btn-primary" type="button"
+																data-original-title="" title="">Submit!</button>
+												</span></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section class="row">
+			<div class="col-12">
+				<div class="card mb-4">
+					<div class="card-block">
+						<h3 class="card-title">Checkboxes &amp; Radios</h3>
+						<div class="row">
+							<div class="col-lg-6 mb-sm-4 mb-lg-0">
+								<label class="custom-control custom-checkbox">
+									<input type="checkbox" class="custom-control-input"><span
+									class="custom-control-indicator"></span>
+									<span class="custom-control-description">Check this custom checkbox</span></label>
+								<br/>
+								<label class="custom-control custom-checkbox">
+									<input type="checkbox" class="custom-control-input"><span
+									class="custom-control-indicator"></span>
+									<span class="custom-control-description">Check this custom checkbox</span></label>
+							</div>
+							<div class="col-lg-6">
+								<label class="custom-control custom-radio">
+									<input id="radio1" name="radio" type="radio" class="custom-control-input"><span
+									class="custom-control-indicator"></span>
+									<span class="custom-control-description">Toggle this custom radio</span></label>
+								<br/>
+								<label class="custom-control custom-radio">
+									<input id="radio2" name="radio" type="radio" class="custom-control-input"><span
+									class="custom-control-indicator"></span>
+									<span
+										class="custom-control-description">Or toggle this other custom radio</span></label>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section class="row">
+			<div class="col-12 mb-2">
+				<h3 class="mt-4 mb-4">Alerts</h3>
+				<div class="alert bg-primary" role="alert"><em class="fa fa-comment mr-2"></em> Welcome to the admin
+					dashboard panel bootstrap template <a href="#" class="float-right"><em
+						class="fa fa-remove"></em></a></div>
+				<div class="alert bg-info" role="alert"><em class="fa fa-tag mr-2"></em> Welcome to the admin dashboard
+					panel bootstrap template <a href="#" class="float-right"><em class="fa fa-remove"></em></a></div>
+				<div class="alert bg-success" role="alert"><em class="fa fa-check-circle mr-2"></em> Welcome to the
+					admin dashboard panel bootstrap template <a href="#" class="float-right"><em
+						class="fa fa-remove"></em></a></div>
+				<div class="alert bg-warning" role="alert"><em class="fa fa-exclamation-triangle mr-2"></em> Welcome to
+					the admin dashboard panel bootstrap template <a href="#" class="float-right"><em
+						class="fa fa-remove"></em></a></div>
+				<div class="alert bg-danger" role="alert"><em class="fa fa-minus-circle mr-2"></em> Welcome to the admin
+					dashboard panel bootstrap template <a href="#" class="float-right"><em
+						class="fa fa-remove"></em></a></div>
+			</div>
+		</section>
+		<section class="row">
+			<div class="col-12 mt-1 mb-4">Template by <a href="https://www.medialoot.com">Medialoot</a></div>
+		</section>
+	</div>
+</section>

@@ -1,0 +1,185 @@
+{
+	"general": {
+		"copyrights": "Copyright by @itCraft 2018®",
+		"forgotPassword": "Forgot password",
+		"goBackToLogin": "Go back to login",
+		"goBackToHome": "Go back to home",
+		"resetEmailSent": "Email with further instructions sent",
+		"resetEmailFailure": "Failed to sent email",
+		"403pageMessage": "You don't have enough permissions to see this page",
+		"backHome": "go back home",
+		"defaultPagination": "Default pagination",
+		"toggleNavigation": "Toggle navigation",
+		"newPasswordSet": "New password was set successfully",
+		"newPasswordSetFailure": "Failed to set new password"
+	},
+	"menu": {
+		"home": "Home",
+		"case": "case",
+		"theme": "theme",
+		"users": "users",
+		"animals": "animals",
+		"profile": "profile",
+		"group1": "Group 1",
+		"search": "Search"
+	},
+
+	"sidebar": {
+		"overview": "Overview",
+		"reports": "Reports",
+		"analytics": "Analytics",
+		"export": "Export"
+	},
+
+	"demo": {
+		"some": "some demo {{value}}"
+	},
+
+	"common": {
+		"yes": "Yes",
+		"no": "No",
+		"ok": "Ok",
+		"cancel": "Cancel",
+		"edit": "Edit",
+		"reset": "Reset",
+		"list": "List",
+		"items": "Items",
+		"upload": "Upload",
+		"current": "current"
+	},
+
+	"files": {
+		"upload": "upload new file",
+		"uploadSuccessful": "file uploaded",
+		"uploadError": "error while uploading file"
+	},
+
+	"forms": {
+		"add": "Add new",
+		"onNewPage": "On new page",
+		"inModal": "In modal",
+		"submit": "Submit",
+		"create": "Create",
+		"edit": "Edit"
+	},
+
+	"inlineErrors": {
+		"general": "Incorrect data",
+		"required": "This field is required",
+		"email": "Incorrect email format",
+		"minlength": "This field is too short",
+		"maxlength": "This field is too long",
+		"min": "Minimum number is 0",
+		"max": "Maximum number is 100",
+		"matchOther": "Passwords do not match",
+		"whitespace": "Invalid form value",
+		"zeroValue": "Value must be higher than 0"
+	},
+
+	"validation_errors": {
+		"INVALID_UNIQUE_EMAIL": "Email address already taken",
+		"INVALID_USERNAME": "Invalid username",
+		"INVALID_UNIQUE_USERNAME": "Username already taken",
+		"PASSWORD_TOO_WEAK": "Password must contain minimum 3 types of the following: lower case letters, capital letters, numbers, special characters and be 4-50 characters long.",
+		"INVALID_SIZE": "Incorrect field size. Field should be ",
+		"REQUIRED": "This field is required",
+		"INVALID_MIN_VALUE": "Minimum number is 0",
+		"INVALID_Max_VALUE": "Maximum number is 100"
+	},
+
+	"datatables": {
+		"filters": "Filters",
+		"list": "List",
+		"datatable": "Datatable",
+		"size": "Size",
+		"sort": "Sort",
+		"type": "Type",
+		"search": "Search",
+		"expanseCollapseRow": "Expand/Collapse Row"
+	},
+
+	"login": {
+		"login": "Login",
+		"logout": "Logout",
+		"profile": "Profile",
+
+		"badLoginOrPass": "Incorrect login or password",
+		"accountDisabled": "This account has not been activated by admin",
+		"notActivated": "Please click the email link to activate your account",
+		"loginPage": {
+			"title": "Welcome",
+			"entryText": "Please enter your credentials below",
+			"username": "Username",
+			"password": "Password"
+		},
+		"recoveryPasswordPage": {
+			"title": "Password recovery",
+			"entryText": "Please enter your credentials below",
+			"email": "Please enter your email",
+			"submit": "Send to registered email"
+		},
+		"setNewPasswordPage": {
+			"title": "Enter new password",
+			"password": "Please enter your new password",
+			"submit": "Save new password"
+		}
+	},
+
+	"users": {
+		"id": "Id",
+		"username": "Username",
+		"firstName": "First name",
+		"lastName": "Last name",
+		"email": "Email",
+		"password": "Password",
+		"role": "Role",
+		"edited": "Successfully edited",
+		"created": "Successfully created",
+		"deleted": "User successfully deleted"
+	},
+
+	"roles": {
+		"ADMIN": "Admin",
+		"USER": "User"
+	},
+
+	"case": {
+		"buttons": "buttons",
+		"alerts": "alerts",
+		"datepicker": "datepicker",
+		"datatables": "datatables",
+		"interceptor": "interceptor",
+		"state": "state",
+		"error": "error",
+		"forms": "forms",
+		"select": "select",
+		"maps": "maps",
+		"translate": "translate",
+		"modal": "modal",
+		"tooltip": "tooltip",
+		"infiniteScroll": "infinite scroll",
+		"changeDetection": "change detection"
+	},
+
+	"animals": {
+		"animal": "Animal",
+		"list": "Animal list",
+		"name": "Name",
+		"type": "Type",
+		"description": "Description",
+		"deleted": "Animal deleted",
+		"edited": "Successfully edited",
+		"created": "Successfully created",
+		"allTypes": "All animal types",
+		"createAnimal": "Create animal",
+
+		"types": {
+			"BIRD": "Bird",
+			"FISH": "Fish",
+			"MAMMAL": "Mammal",
+			"REPTILE": "Reptile",
+			"AMPHIBIAN": "Amphibian",
+			"INSECT": "Insect"
+		}
+	}
+}

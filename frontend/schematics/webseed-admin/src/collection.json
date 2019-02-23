@@ -1,0 +1,15 @@
+{
+	"$schema": "../node_modules/@angular-devkit/schematics/collection-schema.json",
+	"schematics": {
+		"list-component": {
+			"description": "Admin List view",
+			"factory": "./list-component",
+			"schema": "./list-component/schema.json"
+		},
+		"module": {
+			"description": "General lazy module",
+			"factory": "./module",
+			"schema": "./module/schema.json"
+		}
+	}
+}

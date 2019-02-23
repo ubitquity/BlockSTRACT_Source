@@ -1,0 +1,72 @@
+@import "../../../_styles/variables";
+@import '~bootstrap/scss/bootstrap-grid';
+
+:host {
+	display: block;
+	height: 100%;
+
+	@include media-breakpoint-down(md) {
+		flex: 1;
+		max-height: calc(100vh - 58px);
+	}
+}
+
+.header {
+	background-color: $secondary;
+	display: flex;
+	color: $white;
+
+	@include media-breakpoint-down(md) {
+		display: block;
+	}
+
+	h3 {
+		font-weight: 500;
+		word-break: break-word;
+
+		@include media-breakpoint-down(md) {
+			font-size: 1.2rem;
+		}
+	}
+
+	.arrow-back {
+		font-size: 25px;
+		padding: 15px 20px;
+		cursor: pointer;
+	}
+}
+
+.conversation-block {
+	max-height: 500px;
+	overflow-x: hidden;
+
+
+	// @include media-breakpoint-down(md) {
+	// 	max-height: unset;
+	// }
+}
+
+textarea {
+	background-color: $white;
+	border: 0;
+	outline: 0;
+
+	@include media-breakpoint-down(sm) {
+		max-height: 40px;
+		font-size: 0.85rem;
+	}
+
+}
+
+@include media-breakpoint-down(sm) {
+	.submit-btn, .order-btn {
+		font-size: 0.9rem;
+	}
+}
+
+
+@media screen and (max-width: 375px) {
+	.last-message {
+		display: none;
+	}
+}

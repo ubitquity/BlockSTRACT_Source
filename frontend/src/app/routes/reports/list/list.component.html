@@ -1,0 +1,125 @@
+<div class="main-wrap d-flex flex-column h-100">
+	<div class="header-block">
+		<div class="d-block d-lg-none container p-0 position-absolute ">
+			<span class="arrow-back" [routerLink]="prevUrl">
+				<fa-icon class="" [icon]="faAngleLeft"></fa-icon>
+			</span>
+		</div>
+		<h2>Reports</h2>
+	</div>
+	<div class="container flex-grow-1 d-flex flex-column">
+
+		<div class="mt-5" *ngIf="user.role === 'ADMIN'">
+			<div class="row no-gutters align-items-baseline my-3">
+				<div class="col-12 col-lg shadow bg-white pb-5 px-3 py-3 mb-4 mb-lg-0 mr-lg-4">
+					<div class="text-primary d-flex justify-content-between border-bottom-primary-lg align-items-center">
+						<h6 class="mb-0 py-4 font-weight-bold ">Abstractors</h6>
+					</div>
+					<div class="row align-items-center no-gutters py-3 border-bottom">
+						<div class="col">Most responsive abstractor</div>
+						<div class="col">
+								<a *ngIf="mostResponsive" [routerLink]="'../../abstractors/details/' + mostResponsive.id">
+									{{mostResponsive.name}}
+								</a>
+							</div>
+					</div>
+					<div class="row no-gutters py-3 border-bottom">
+						<div class="col">Cheapest abstractor</div>
+						<div class="col">
+								<a *ngIf="cheapest" [routerLink]="'../../abstractors/details/' + cheapest.id">
+									{{cheapest.name}}
+								</a>
+							</div>
+					</div>
+					<div class="row align-items-center no-gutters py-3 border-bottom">
+						<div class="col">Most expensive abstractor</div>
+						<div class="col">
+							<a *ngIf="mostExpensive" [routerLink]="'../../abstractors/details/' + mostExpensive.id">
+								{{mostExpensive.name}}
+							</a>
+						</div>
+					</div>
+				</div>
+				<div class="col-12 col-lg shadow bg-white px-3 py-3 mb-2 mb-lg-0 mr-lg-2">
+					<div class="text-primary d-flex justify-content-between border-bottom-primary-lg align-items-center">
+						<h6 class="mb-0 py-4 font-weight-bold ">Average Costs</h6>
+					</div>
+					<div class="row align-items-center no-gutters py-3">
+						<div class="col mr-2 mr-sm-5">
+							<ng-select [clearable]="false" [items]="options" [searchable]="false" bindName="label" bindValue="value" [(ngModel)]="month" (ngModelChange)="getAverageCost()">
+							</ng-select>
+						</div>
+						<div class="col mb-0 h5 text-nowrap text-center text-sm-left" style="font-weight: 600">
+							${{cost}}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+	<!--	<section *ngIf="user.role === 'ABSTRACTOR'" class="d-md-flex align-items-center">
+			 <ul class="tab-links d-flex flex-grow-1 p-0 mb-0 list-unstyled">
+
+				<li (click)="changeCurrentTab('statistics')" [class.active]="currentTab === 'statistics'" class="text-uppercase small my-3 py-2 mx-2 mx-md-3 text-secondary cursor-pointer">Statistics</li>
+				<li (click)="changeCurrentTab('history')" [class.active]="currentTab === 'history'" class="text-uppercase small my-3 py-2 mx-2 mx-md-3 text-secondary cursor-pointer">Completed
+					Orders</li>
+				<li *ngIf="currentTab === 'history'" class="cursor-pointer mr-3 ml-auto d-md-none d-flex align-items-center">
+					<fa-icon class="text-secondary cursor-pointer d-flex align-items-center" (click)="toggleSearch()" [icon]="faSearch"></fa-icon>
+				</li>
+			</ul>
+
+
+			<div [class.d-none]="!showSearch" class="ml-auto mb-3 mb-md-0 d-none d-md-block">
+				<div class="d-flex input-group input-group-sm bg-lightGray align-items-center text-nowrap">
+					<fa-icon class="ml-2 mr-1 d-none d-md-block text-secondary cursor-pointer" (click)="filter({search: search})"
+					 [icon]="faSearch"></fa-icon>
+					<input type="text" class="flex-fill text-secondary border-0 px-3 py-2 px-md-2 small bg-transparent outline-0"
+					 placeholder="Search" [(ngModel)]="search" (keydown)="filter({search: search}, $event)">
+					<button (click)="filter({search: search})" class="btn d-md-none btn-primary">
+						<fa-icon class="text-white" [icon]="faSearch"></fa-icon>
+					</button>
+				</div>
+			</div>
+		</section> -->
+		<section class="content flex-grow-1 d-flex flex-column mt-5" *ngIf="user.role === 'ABSTRACTOR'">
+			<div class="container p-0" >
+				<div class="row no-gutters align-items-start">
+					<div class="col-12 col-lg shadow bg-white pb-5 px-3 py-3 mb-4 mb-lg-0 mr-lg-4">
+						<div class="text-primary d-flex justify-content-between border-bottom-primary-lg align-items-center">
+							<h6 class="mb-0 py-4 font-weight-bold ">Projects</h6>
+						</div>
+						<div class="row align-items-center no-gutters py-3 border-bottom">
+							<div class="col">Won</div>
+							<div class="col">
+								{{won}}
+							</div>
+						</div>
+						<div class="row no-gutters py-3 border-bottom">
+							<div class="col">Declined</div>
+							<div class="col">{{declined}}</div>
+						</div>
+						<div class="row align-items-center no-gutters py-3 border-bottom">
+							<div class="col">Not approved by client</div>
+							<div class="col">
+								{{recalled}}
+							</div>
+						</div>
+					</div>
+					<div class="col-12 col-lg shadow bg-white px-3 py-3 mb-lg-0">
+						<div class="text-primary d-flex justify-content-center align-items-center">
+							<h6 class="mb-0 pt-3 font-weight-bold text-center">Total income</h6>
+						</div>
+						<div class="row align-items-center no-gutters py-3">
+							<div class="col mb-0 h3 text-nowrap text-center" style="font-weight: 600">
+								${{totalIncome}}
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
+
+
+</div>

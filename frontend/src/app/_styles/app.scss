@@ -1,0 +1,233 @@
+@import "variables";
+@import '~bootstrap/scss/bootstrap-grid';
+
+
+html {
+	min-height: 100%;
+	position: relative;
+	word-break: break-word;
+}
+
+body {
+	font-family: 'IBM Plex Sans', sans-serif;
+}
+
+.main-wrap {
+	margin-left: -15px;
+	margin-right: -15px;
+	padding: 0;
+
+	>app-header {
+		padding-left: 2rem;
+		padding-right: 2rem;
+		margin-top: -15px;
+
+		h1 {
+			padding: 1.5rem 0;
+			color: $white;
+			font-weight: 500;
+			letter-spacing: -1px;
+		}
+	}
+
+	>section {
+		padding-left: 2rem;
+		padding-right: 2rem;
+	}
+
+	.filters {
+		padding-top: 2rem;
+		padding-bottom: 2rem;
+		background-color: rgba($darkGray, .05);
+		display: flex;
+
+		.filter {
+			margin-right: 2rem;
+
+			&:last-child {
+				margin-right: 0;
+			}
+		}
+
+		h5 {
+			font-size: .75rem;
+			font-weight: 700;
+		}
+
+		.size-xs {
+			max-width: 120px;
+		}
+
+		.size-sm {
+			max-width: 150px;
+		}
+
+		.size-md {
+			max-width: 200px;
+		}
+
+		.size-lg {
+			max-width: 300px;
+		}
+
+		.size-xl {
+			max-width: 400px;
+		}
+
+		ng-select {
+			min-width: 100px;
+		}
+
+		.ng-select.ng-select-single .ng-select-container {
+			background-color: rgba($black, .07);
+			border-width: 0;
+			border-radius: 0;
+		}
+
+		input.form-control {
+			height: 36px;
+			border: 0;
+			border-radius: 0;
+			background-color: rgba($black, .07);
+		}
+
+		.input-group {
+			.btn {
+				margin-left: 0;
+				border-radius: 0;
+			}
+
+			.btn-dark {
+				background-color: rgba($black, .3);
+				border-color: transparent;
+			}
+		}
+	}
+}
+
+.header-block {
+	background-color: $secondary;
+	color: $white;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: relative;
+
+	.arrow-back {
+		left: 0px;
+		padding: 15px 25px;
+		font-size: 25px;
+		background: transparent;
+		border: 0;
+		cursor: pointer;
+		outline: 0;
+	}
+
+	@include media-breakpoint-up(lg) {
+		height: 165px;
+
+		.arrow-back {
+			font-size: 32px;
+		}
+	}
+
+	@include media-breakpoint-down(md) {
+		h2 {
+			font-size: 1.5rem;
+			padding: 1.5rem 0;
+		}
+
+		h2.bigger {
+			font-size: 1.8rem;
+		}
+	}
+
+	&.card-header {
+		height: 65px;
+	}
+}
+
+.tab-links {
+	overflow-x: auto;
+	li {
+		border-bottom: 4px solid transparent;
+	}
+
+	.active {
+		border-color: $lightBlue;
+	}
+}
+
+.cursor-pointer {
+	cursor: pointer !important;
+}
+
+.outline-0 {
+	outline: none !important;
+}
+
+.text-gray {
+	color: $gray !important;
+}
+
+.text-darkGray {
+	color: $darkGray !important;
+}
+
+.text-blue {
+	color: $lightBlue !important;
+}
+
+.bg-lightGray {
+	background-color: $lightGray !important;
+}
+
+
+.disabled,
+:disabled {
+	cursor: default !important;
+}
+
+.border-bottom-primary-lg {
+	border-bottom: 2px solid $primary;
+}
+
+.text-underline {
+	text-decoration: underline !important;
+}
+
+.scrollbar {
+	overflow-y: auto;
+	// direction: rtl;
+
+	// & > * {
+	//     direction:ltr;
+	// }
+
+	&::-webkit-scrollbar-track {
+		border-radius: 10px;
+		background-color: $gray;
+	}
+
+	&::-webkit-scrollbar {
+		border-radius: 10px;
+		width: 7px;
+		background-color: $gray;
+	}
+
+	&::-webkit-scrollbar-thumb {
+		border-radius: 10px;
+		background-color: rgba($darkGray, 0.3);
+	}
+}
+
+button:focus {
+	outline: 0;
+}
+
+
+@include media-breakpoint-down(sm) {
+	input.small {
+		font-size: 16px !important;
+	}
+}

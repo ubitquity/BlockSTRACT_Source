@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd
+		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.2.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
+
+	<tx:annotation-driven />
+	
+	<security:global-method-security
+		authentication-manager-ref="authenticationManager"
+		secured-annotations="enabled"
+		pre-post-annotations="enabled"
+		proxy-target-class="true">
+		<security:expression-handler ref="appExpressionHandler" />
+	</security:global-method-security>
+
+	<context:component-scan base-package="pl.itcraft.appstract.core" use-default-filters="false">
+		<context:include-filter type="annotation" expression="org.springframework.web.bind.annotation.RestController"/>
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+	</context:component-scan>
+	<context:component-scan base-package="pl.itcraft.appstract.commons.api" use-default-filters="false">
+		<context:include-filter type="annotation" expression="org.springframework.web.bind.annotation.RestController"/>
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+	</context:component-scan>
+
+	<!-- Enables the Spring MVC @Controller programming model -->
+	<mvc:annotation-driven content-negotiation-manager="contentNegotiationManager"/>
+
+	<!-- Spring nie powinien traktowac koncowek URL'i po kropce jako rozszerzen pliku i analizowac naglowka Accept -->
+	<bean id="contentNegotiationManager" class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
+		<property name="favorPathExtension" value="false" />
+	</bean>
+
+	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
+	<mvc:resources mapping="/resources/**" location="/resources/" />
+	<mvc:resources mapping="/resources-commons/**" location="classpath:/META-INF/web/" cache-period="0" />
+
+	<mvc:resources mapping="/swagger-ui.html" location="classpath:/META-INF/resources/" />
+	<mvc:resources mapping="/webjars/**" location="classpath:/META-INF/resources/webjars/" />
+
+	<bean id="localeResolver" class="pl.itcraft.appstract.core.utils.ApiClientLocaleResolver" />
+
+	<bean id="swagger2Config"
+		class="springfox.documentation.swagger2.configuration.Swagger2DocumentationConfiguration" />
+	<bean class="springfox.bean.validators.configuration.BeanValidatorPluginsConfiguration" />
+
+	<bean id="swaggerUiConfiguration" class="springfox.documentation.swagger.web.UiConfiguration">
+		<constructor-arg index="0">
+			<null />
+		</constructor-arg>
+		<constructor-arg index="1" value="none" type="java.lang.String" />
+		<constructor-arg index="2" value="alpha" type="java.lang.String" />
+		<constructor-arg index="3" value="model" type="java.lang.String" />
+		<constructor-arg index="4">
+			<util:constant static-field="springfox.documentation.swagger.web.UiConfiguration.Constants.DEFAULT_SUBMIT_METHODS" />
+		</constructor-arg>
+		<constructor-arg index="5" value="true" type="boolean" />
+		<constructor-arg index="6" value="true" type="boolean" />
+	</bean>
+
+	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/views/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize" value="1073741824" />
+	</bean>
+
+</beans>

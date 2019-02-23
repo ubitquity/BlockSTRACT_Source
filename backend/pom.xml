@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	
+	<groupId>pl.itcraft.appstract</groupId>
+	<artifactId>appstract-pom</artifactId>
+	<name>Appstract Api POM</name>
+	<version>0.0.0</version>
+	<packaging>pom</packaging>
+
+	<modules>
+		<module>commons</module>
+		<module>api</module>
+	</modules>
+	
+	<properties>
+		<distribution>appstract</distribution>
+		<appLogLevel>info</appLogLevel>
+		
+		<app.javaVersion>1.8</app.javaVersion>
+		<app.sourceEncoding>UTF-8</app.sourceEncoding>
+		
+		<servlet-api.version>3.1.0</servlet-api.version>
+		<jsp-api.version>2.2</jsp-api.version>		
+		
+		<project.build.sourceEncoding>${app.sourceEncoding}</project.build.sourceEncoding>
+		
+		<servlet-jstl.version>1.2</servlet-jstl.version>
+		
+		<slf4j.version>1.7.25</slf4j.version>
+		<logback.version>1.2.0</logback.version>
+		
+		<hibernate.version>4.3.11.Final</hibernate.version>
+		
+		<spring.version>4.3.7.RELEASE</spring.version>
+		<spring-data-jpa.version>1.11.1.RELEASE</spring-data-jpa.version>
+		<spring-security.version>4.2.2.RELEASE</spring-security.version>
+	</properties>
+
+	<dependencies>
+	</dependencies>
+	
+	<profiles>
+		<profile>
+			<id>dev</id>
+			<properties>
+				<env.SPRINGPROFILE>dev</env.SPRINGPROFILE>
+				<appLogLevel>debug</appLogLevel>
+			</properties>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+		</profile>
+		<profile>
+			<id>test</id>
+			<properties>
+				<env.SPRINGPROFILE>test</env.SPRINGPROFILE>
+				<appLogLevel>info</appLogLevel>
+			</properties>
+		</profile>
+		<profile>
+			<id>prod</id>
+			<properties>
+				<env.SPRINGPROFILE>prod</env.SPRINGPROFILE>
+				<appLogLevel>info</appLogLevel>
+			</properties>
+		</profile>
+	</profiles>
+	
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>buildnumber-maven-plugin</artifactId>
+					<version>1.4</version>
+					<executions>
+						<execution>
+							<phase>validate</phase>
+							<goals>
+								<goal>create</goal>
+							</goals>
+						</execution>
+					</executions>
+					<configuration>
+						<buildNumberPropertyName>buildNumber</buildNumberPropertyName>
+						<scmBranchPropertyName>buildScmBranch</scmBranchPropertyName>
+						<shortRevisionLength>8</shortRevisionLength>
+						<format>{0} {1,date,yyyy-MM-dd HH:mm}</format>
+						<items>
+							<item>scmVersion</item>
+							<item>timestamp</item>
+						</items>
+						<username></username>
+						<password></password>
+						<doCheck>false</doCheck>
+						<doUpdate>false</doUpdate>
+					</configuration>
+				</plugin>
+				<plugin>
+					<!-- See https://www.ricston.com/blog/solving-dependency-conflicts-maven -->
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-enforcer-plugin</artifactId>
+					<version>3.0.0-M1</version>
+					<executions>
+						<execution>
+						<id>enforce-versions</id>
+						<goals>
+							<goal>enforce</goal>
+						</goals>
+						<configuration>
+							<rules>
+								<dependencyConvergence>
+									<level>ERROR</level>
+								</dependencyConvergence>
+							</rules>
+						</configuration>
+						</execution>
+					</executions>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+	
+	<scm>
+		<connection>scm:git:http://lab.itcraft.pl:8182//appstrackt/backend.git</connection>
+	</scm>
+</project>

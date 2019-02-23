@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+	Configuration file for LogBack (slf4J implementation)
+	See here for more details: http://gordondickens.com/wordpress/2013/03/27/sawing-through-the-java-loggers/
+-->
+<configuration scan="true">
+
+	<property name="APP_LOG_DIR" value="${CATALINA_HOME}/logs/${project.artifactId}" />
+
+	<contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator">
+		<resetJUL>true</resetJUL>
+	</contextListener>
+
+	<!-- To enable JMX Management -->
+	<jmxConfigurator />
+
+	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%-5level [%thread] [%d] %c{32} - %m%n</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="ERRORS" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${APP_LOG_DIR}/errors.log</file>
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>ERROR</level>
+		</filter>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!-- daily rollover -->
+			<fileNamePattern>${APP_LOG_DIR}/errors.%d{yyyy-MM-dd}.log</fileNamePattern>
+			<!-- keep 30 days' worth of history -->
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%-5level [%thread] [%d] %c{32} - %m%n</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="AUTH" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${APP_LOG_DIR}/auth.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!-- daily rollover -->
+			<fileNamePattern>${APP_LOG_DIR}/auth.%d{yyyy-MM-dd}.log</fileNamePattern>
+			<!-- keep 30 days' worth of history -->
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%-5level [%thread] [%d] %c{32} - %m%n</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="CRUD" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${APP_LOG_DIR}/crud.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!-- daily rollover -->
+			<fileNamePattern>${APP_LOG_DIR}/crud.%d{yyyy-MM-dd}.log</fileNamePattern>
+			<!-- keep 30 days' worth of history -->
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%-5level [%thread] [%d] %c{32} - %m%n</pattern>
+		</encoder>
+	</appender>
+	
+	<appender name="SQL" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${APP_LOG_DIR}/sql.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!-- daily rollover -->
+			<fileNamePattern>${APP_LOG_DIR}/sql.%d{yyyy-MM-dd}.log</fileNamePattern>
+			<!-- keep 30 days' worth of history -->
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%-5level [%thread] [%d] %c{32} - %m%n</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="API" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${APP_LOG_DIR}/api.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!-- daily rollover -->
+			<fileNamePattern>${APP_LOG_DIR}/api.%d{yyyy-MM-dd}.log</fileNamePattern>
+			<!-- keep 30 days' worth of history -->
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%-5level [%thread] [%d] %c{32} - %m%n</pattern>
+		</encoder>
+	</appender>
+	
+	<appender name="FCM" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${APP_LOG_DIR}/fcm.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!-- daily rollover -->
+			<fileNamePattern>${APP_LOG_DIR}/fcm.%d{yyyy-MM-dd}.log</fileNamePattern>
+			<!-- keep 30 days' worth of history -->
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%-5level [%thread] [%d] %c{32} - %m%n</pattern>
+		</encoder>
+	</appender>
+	
+	<appender name="FLYWAY" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${APP_LOG_DIR}/flyway.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!-- daily rollover -->
+			<fileNamePattern>${APP_LOG_DIR}/flyway.%d{yyyy-MM-dd}.log</fileNamePattern>
+			<!-- keep 30 days' worth of history -->
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%-5level [%thread] [%d] %c{32} - %m%n</pattern>
+		</encoder>
+	</appender>
+
+	<root level="warn">
+		<appender-ref ref="CONSOLE"/>
+	</root>
+
+	<!--CRUD logger -->
+	<logger name="pl.itcraft.appstract.core.interceptors.CrudLogInterceptor" level="info" additivity="false">
+		<appender-ref ref="CRUD"/>
+		<appender-ref ref="CONSOLE"/>
+	</logger>
+	
+	<!--FCM logger -->
+	<logger name="pl.itcraft.appstract.core.fcm" level="debug" additivity="false">
+		<appender-ref ref="FCM"/>
+	</logger>
+	
+	<!--AUTH logger -->
+	<logger name="pl.itcraft.appstract.admin.security" level="info" additivity="false">
+		<appender-ref ref="AUTH"/>
+		<appender-ref ref="CONSOLE"/>
+	</logger>
+	
+	<!--API logger-->
+	<logger name="pl.itcraft.appstract" level="info" additivity="false">
+		<appender-ref ref="API"/>
+		<appender-ref ref="ERRORS"/>
+		<appender-ref ref="CONSOLE"/>
+	</logger>
+	
+	<logger name="org.springframework" level="warn" >
+		<appender-ref ref="API"/>
+		<appender-ref ref="ERRORS"/>
+		<appender-ref ref="CONSOLE"/>
+	</logger>
+
+	<logger name="org.hibernate" level="error">
+		<appender-ref ref="API"/>
+		<appender-ref ref="ERRORS"/>
+		<appender-ref ref="CONSOLE"/>
+	</logger>
+	
+	<logger name="com.zaxxer.hikari" level="info" additivity="false">
+		<appender-ref ref="API"/>
+		<appender-ref ref="ERRORS"/>
+		<appender-ref ref="CONSOLE"/>
+	</logger>
+	
+	<!--FLYWAY logger -->
+	<logger name="org.flywaydb.core" level="info" additivity="false">
+		<appender-ref ref="FLYWAY"/>
+		<appender-ref ref="CONSOLE"/>
+	</logger>
+
+	<!--SQL logger -->
+	<logger name="org.hibernate.SQL" level="off">
+		<appender-ref ref="SQL"/>
+		<appender-ref ref="CONSOLE"/>
+	</logger>
+
+</configuration>

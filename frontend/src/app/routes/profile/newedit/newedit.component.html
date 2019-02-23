@@ -1,0 +1,72 @@
+<div class="card " *ngIf="form.value.notifications !== null">
+	<div class="card-header header-block ">Edit Account Informations</div>
+	<div class="card-block">
+		<form class="form" [formGroup]="form" (submit)="submit()">
+			<app-form-field *ngIf="user.role === 'ABSTRACTOR'" [form]="form" [serverErrors]="errors" field="firstName">
+				<div class="form-group">
+					<label for="firstName">First Name</label>
+					<input type="text" class="form-control" id="firstName" formControlName="firstName">
+				</div>
+			</app-form-field>
+			<app-form-field *ngIf="user.role === 'ABSTRACTOR'" [form]="form" [serverErrors]="errors" field="lastName">
+				<div class="form-group">
+					<label for="lastName">Last Name</label>
+					<input type="text" class="form-control" id="lastName" formControlName="lastName">
+				</div>
+			</app-form-field>
+			<app-form-field [form]="form" [serverErrors]="errors" field="companyName">
+				<div class="form-group">
+					<label for="companyName">Company Name</label>
+					<input type="text" class="form-control" id="companyName" formControlName="companyName">
+				</div>
+			</app-form-field>
+			<app-form-field [form]="form" [serverErrors]="errors" field="bankAccount">
+				<div class="form-group">
+					<label for="bankAccount">Bank AHC</label>
+					<input type="text" class="form-control" id="bankAccount" formControlName="bankAccount">
+				</div>
+			</app-form-field>
+			<app-form-field [form]="form" [serverErrors]="errors" field="email">
+				<div class="form-group">
+					<label for="email">Email Address</label>
+					<input (ngModelChange)="markDisabled()" disabled type="text" class="form-control" id="email" formControlName="email">
+				</div>
+			</app-form-field>
+			<app-form-field *ngIf="user.role === 'ABSTRACTOR'" [form]="form" [serverErrors]="errors" field="weeklyAvailability">
+				<div class="form-group">
+					<label for="weeklyAvailability">Weekly Hours Availability</label>
+					<input type="number" class="form-control" id="weeklyAvailability" formControlName="weeklyAvailability">
+				</div>
+			</app-form-field>
+			<app-form-field *ngIf="user.role === 'ABSTRACTOR'" [form]="form" [serverErrors]="errors" field="countries">
+				<div class="form-group">
+					<label for="countries">Countries</label>
+					<ng-select [multiple]="true" [clearable]="false" [searchable]="false" formControlName="countries">
+						<ng-option [value]="'USA'">USA</ng-option>
+					</ng-select>
+				</div>
+			</app-form-field>
+			<app-form-field *ngIf="user.role === 'ABSTRACTOR'" [form]="form" [serverErrors]="errors" field="countyIds">
+				<div class="form-group">
+					<label for="counties">Counties</label>
+					<ng-select [items]="counties" bindValue="id" bindLabel="name" [multiple]="true" [clearable]="false" [searchable]="false" formControlName="countyIds">
+					</ng-select>
+				</div>
+			</app-form-field>
+			<app-form-field [form]="form" [serverErrors]="errors" field="notifications">
+				<div class="form-group">
+					<label for="notifications">Notifications</label>
+					<ng-select [clearable]="false" [searchable]="false" formControlName="notifications">
+						<ng-option [value]="true">On</ng-option>
+						<ng-option [value]="false">Off</ng-option>
+					</ng-select>
+				</div>
+			</app-form-field>
+			<div class="d-flex justify-content-center">
+				<button class="btn btn-success btn-lg mr-2" [disabled]="form.invalid || !form.dirty">{{'forms.submit' | translate}}</button>
+				<button (click)="modal.close()" class="btn btn-secondary btn-lg" >Cancel</button>
+
+			</div>
+		</form>
+	</div>
+</div>

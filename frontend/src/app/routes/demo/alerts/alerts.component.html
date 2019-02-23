@@ -1,0 +1,15 @@
+<header class="page-header pt-2 pb-4 text-center">
+	<h1>Alerts</h1>
+</header>
+
+<div class="card mb-5">
+	<div class="card-header">Alerts</div>
+	<div class="card-block">
+		<p *ngFor="let alert of alerts">
+			<ngb-alert [type]="alert.type" (close)="closeAlert(alert)">{{ alert.message }}</ngb-alert>
+		</p>
+		<p>
+			<button type="button" class="btn btn-primary" (click)="reset()">Reset</button>
+		</p>
+	</div>
+</div>

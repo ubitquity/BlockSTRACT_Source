@@ -1,0 +1,82 @@
+<nav class="navbar navbar-expand-md navbar-light fixed-top" id="mainnav">
+	<!--<a class="navbar-brand" routerLink="/home">logo</a>-->
+</nav>
+<div class="container pt-4">
+	<div class="d-flex justify-content-center align-items-center pb-4 row">
+		<div class="flex-column col-12 col-sm-8 col-md-6">
+			<div class="card">
+				<h3 class="mb-2 header-block p-3 text-white text-center">Register as Abstractor</h3>
+				<div class="card-block">
+					<form [formGroup]="registerForm" (submit)="submit($event)">
+						<!-- <app-form-field [serverErrors]="serverErrors" [form]="registerForm" field="username">
+							<div class="form-group">
+								<label for="username">Username *</label>
+								<input type="text" class="form-control" formControlName="username" id="username">
+							</div>
+						</app-form-field> -->
+						<app-form-field [serverErrors]="serverErrors" [form]="registerForm" field="email">
+							<div class="form-group">
+								<label for="email">Email *</label>
+								<input type="email" class="form-control" formControlName="email" id="email">
+							</div>
+						</app-form-field>
+						<app-form-field [serverErrors]="serverErrors" [form]="registerForm" field="password">
+							<div class="form-group">
+								<label for="password">Password *</label>
+								<input type="password" class="form-control" id="password" formControlName="password">
+							</div>
+						</app-form-field>
+						<app-form-field [serverErrors]="serverErrors" [form]="registerForm" field="confirmPassword">
+							<div class="form-group">
+								<label for="confirmPassword">Confirm Password *</label>
+								<input type="password" class="form-control" id="confirmPassword" formControlName="confirmPassword">
+							</div>
+						</app-form-field>
+						<app-form-field [serverErrors]="serverErrors" [form]="registerForm" field="firstName">
+							<div class="form-group mt-4">
+								<label for="firstName"> First Name *</label>
+								<input type="text" class="form-control" formControlName="firstName" id="firstName">
+							</div>
+						</app-form-field>
+						<app-form-field [serverErrors]="serverErrors" [form]="registerForm" field="lastName">
+							<div class="form-group">
+								<label for="lastName"> Last Name *</label>
+								<input type="text" class="form-control" formControlName="lastName" id="lastName">
+							</div>
+						</app-form-field>
+						<app-form-field [serverErrors]="serverErrors" [form]="registerForm" field="companyName">
+							<div class="form-group">
+								<label for="companyName"> Company Name *</label>
+								<input type="text" class="form-control" formControlName="companyName" id="companyName">
+							</div>
+						</app-form-field>
+						<app-form-field [serverErrors]="serverErrors" [form]="registerForm" field="phoneNumber">
+							<div class="form-group">
+								<label for="phoneNumber"> Phone Number *</label>
+								<input type="text" class="form-control" formControlName="phoneNumber" id="phoneNumber">
+							</div>
+						</app-form-field>
+						<app-form-field [serverErrors]="serverErrors" [form]="registerForm" field="weeklyHoursAvailability">
+							<div class="form-group">
+								<label for="weeklyHoursAvailability"> How many hours a week are you available? *</label>
+								<input type="number" class="form-control" formControlName="weeklyHoursAvailability" id="weeklyHoursAvailability">
+							</div>
+						</app-form-field>
+
+						<div class="d-flex justify-content-center">
+							<button class="btn btn-primary mt-3 btn-lg" [disabled]="registerForm.invalid">Register</button>
+						</div>
+
+					</form>
+				</div>
+			</div>
+			<div class="card mt-3 text-white bg-danger" *ngIf="registerError">
+				<div class="card-block text-center">
+					{{ registerError | translate }}
+				</div>
+			</div>
+			<button routerLink="/login" class="btn btn-link mt-3">Back to Login</button>
+
+		</div>
+	</div>
+</div>

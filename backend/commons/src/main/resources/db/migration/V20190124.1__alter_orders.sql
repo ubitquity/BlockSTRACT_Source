@@ -1,0 +1,1 @@
+ALTER TABLE orders ADD COLUMN accepted_by_abstractor_time timestamptz;

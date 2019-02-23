@@ -1,0 +1,93 @@
+<ng-container *ngFor="let country of countries">
+	<div class="mb-3" *ngIf="country.cities.length > 0">
+		<h4>
+			{{country.name}}
+		</h4>
+		<ng-container *ngFor="let city of country.cities">
+			<div class="row">
+				<div class="col-md-6 col-lg-3">
+					<div class="form-group">
+						<label>
+							City name
+							<input class="form-control" maxlength="1000" [(ngModel)]="city.name">
+						</label>
+					</div>
+				</div>
+				<div class="col-md-6 col-lg-3">
+					<div class="form-group">
+						<label>
+							Latitude
+							<input class="form-control" type="number" maxlength="1000" [(ngModel)]="city.latitude">
+						</label>
+					</div>
+				</div>
+				<div class="col-md-6 col-lg-3">
+					<div class="form-group">
+						<label>
+							Longitude
+							<input class="form-control" type="number" maxlength="1000" [(ngModel)]="city.longitude">
+						</label>
+					</div>
+				</div>
+				<div class="col-md-6 col-lg-3 align-self-center text-center">
+					<div class="form-group">
+						<button class="btn btn-primary" type="button" [disabled]="disabled"
+						 (click)="onSave.emit(city)">
+							Save
+						</button>
+						<button class="btn btn-danger" type="button" [disabled]="disabled"
+						 (click)="onDelete.emit(city)">
+							Delete
+						</button>
+					</div>
+				</div>
+			</div>
+		</ng-container>
+	</div>
+</ng-container>
+
+<hr>
+<h4>
+	New city
+</h4>
+<div class="row">
+	<div class="col-md-6 mb-2">
+		<ng-select [items]="countries" bindLabel="name" bindValue="id"
+		 placeholder="Select country" [(ngModel)]="newCity.countryId">
+		</ng-select>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-6 col-lg-3">
+		<div class="form-group">
+			<label>
+				City name
+				<input class="form-control" maxlength="1000" [(ngModel)]="newCity.name">
+			</label>
+		</div>
+	</div>
+	<div class="col-md-6 col-lg-3">
+		<div class="form-group">
+			<label>
+				Latitude
+				<input class="form-control" type="number" maxlength="1000" [(ngModel)]="newCity.latitude">
+			</label>
+		</div>
+	</div>
+	<div class="col-md-6 col-lg-3">
+		<div class="form-group">
+			<label>
+				Longitude
+				<input class="form-control" type="number" maxlength="1000" [(ngModel)]="newCity.longitude">
+			</label>
+		</div>
+	</div>
+	<div class="col-md-6 col-lg-3 align-self-center text-center">
+		<div class="form-group">
+			<button class="btn btn-primary" type="button" [disabled]="disabled"
+			 (click)="onSave.emit(newCity)">
+				Create
+			</button>
+		</div>
+	</div>
+</div>

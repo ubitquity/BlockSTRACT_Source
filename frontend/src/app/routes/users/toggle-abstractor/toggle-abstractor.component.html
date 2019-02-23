@@ -1,0 +1,22 @@
+<div class="card" *ngIf="form.value.enabled !== null">
+	<div class="card-header header-block">Activate / Deactivate Abstractor</div>
+	<div class="card-block">
+		<form class="form text-center" [formGroup]="form" (submit)="submit()">
+
+			<div class="form-group mb-5">
+				<label class="d-block mb-2">Abstractor active</label>
+				<div class="btn-group btn-group-toggle row w-50 mx-auto" ngbRadioGroup name="enabled" formControlName="enabled">
+					<label ngbButtonLabel class="btn-outline-primary text-white col-6">
+						<input ngbButton type="radio" [value]="true">Yes
+					</label>
+					<label ngbButtonLabel class="btn-outline-primary text-white col-6">
+						<input ngbButton type="radio" [value]="false">No
+					</label>
+				</div>
+			</div>
+			<button class="btn btn-success btn-lg mr-1" [disabled]="form.invalid || !form.dirty">Save</button>
+			<button class="btn btn-secondary btn-lg ml-1" (click)="modal.close()">Cancel</button>
+
+		</form>
+	</div>
+</div>

@@ -1,0 +1,23 @@
+{
+	"version": "1.6.0",
+	"appName": "appstract",
+	"localName": "appstract",
+	"slugName": "appstract",
+	"production": false,
+	"apiUrl": "https://localhost:4200/appstract-api",
+	"storagePrefix": "AP",
+	"language": "en",
+	"availableLangs": [
+		"en",
+		"pl"
+	],
+	"predefToken": null,
+	"keepStates": true,
+	"authorizationHeaderName": "Authorization",
+	"storageTokenLocation": "credentials.token",
+	"routeWhiteList": [
+		"/login",
+		"/password/reset",
+		"/403"
+	]
+}

@@ -1,0 +1,11 @@
+<ul class="navbar-collapse dropdown-nav" [class.collapse]="toggleTop" (mouseleave)="hideMenu()">
+	<ng-template #recursiveMenu let-menus>
+		<li *ngFor="let menu of menus" class="nav-item text-uppercase" [class.dropdown]="menu.children" (mouseleave)="hideMenu(menu)">
+			<a *ngIf="!(menu.hidden && user.role === 'ABSTRACTOR')" [routerLink]="menu.path"
+			   class="nav-link"  [routerLinkActive]="['active']" >{{menu.slug}}</a>
+		</li>
+	</ng-template>
+	<ng-container *ngTemplateOutlet="recursiveMenu; context:{ $implicit: menus }"></ng-container>
+</ul>
+
+

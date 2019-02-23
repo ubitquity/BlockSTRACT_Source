@@ -1,0 +1,82 @@
+<header class="page-header pt-2 pb-4 text-center">
+	<h1>Buttons</h1>
+</header>
+
+<div class="card mb-5">
+	<div class="card-header">
+		checkbox buttons
+	</div>
+	<div class="card-block">
+		<div class="btn-group" data-toggle="buttons">
+			<label class="btn-primary" ngbButtonLabel>
+				<input type="checkbox" ngbButton [(ngModel)]="model.left"> Left (pre-checked)
+			</label>
+			<label class="btn-primary" ngbButtonLabel>
+				<input type="checkbox" ngbButton [(ngModel)]="model.middle"> Middle
+			</label>
+			<label class="btn-primary" ngbButtonLabel>
+				<input type="checkbox" ngbButton [(ngModel)]="model.right"> Right
+			</label>
+		</div>
+		<hr>
+		<pre>{{model | json}}</pre>
+	</div>
+</div>
+
+<div class="card mb-5">
+	<div class="card-header">Radio buttons</div>
+	<div class="card-block">
+		<div class="btn-group" ngbRadioGroup name="radioBasic" [(ngModel)]="modelRadio">
+			<label ngbButtonLabel class="btn-primary">
+				<input ngbButton type="radio" [value]="1"> Left (pre-checked)
+			</label>
+			<label ngbButtonLabel class="btn-primary">
+				<input ngbButton type="radio" value="middle"> Middle
+			</label>
+			<label ngbButtonLabel class="btn-primary">
+				<input ngbButton type="radio" [value]="false"> Right
+			</label>
+		</div>
+		<hr>
+		<pre>{{modelRadio}}</pre>
+	</div>
+</div>
+
+<div class="card mb-5">
+	<div class="card-header">toggle dropdown</div>
+	<div class="card-block">
+		<div ngbDropdown class="d-inline-block">
+			<button class="btn btn-primary dropdown-toggle" id="dropdownBasic1" ngbDropdownToggle>Toggle dropdown
+			</button>
+			<div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+				<button class="dropdown-item">Action - 1</button>
+				<button class="dropdown-item">Another Action</button>
+				<button class="dropdown-item">Something else is here</button>
+			</div>
+		</div>
+
+		<p>Bootstrap split buttons and dropdowns on button groups are supported with the existing dropdown
+			directives.</p>
+
+		<div class="btn-group" ngbDropdown>
+			<button type="button" class="btn btn-outline-success">Plain ol' button</button>
+			<button class="btn btn-outline-primary" ngbDropdownToggle>Drop me</button>
+			<div class="dropdown-menu" ngbDropdownMenu>
+				<button class="dropdown-item">One</button>
+				<button class="dropdown-item">Two</button>
+				<button class="dropdown-item">Four!</button>
+			</div>
+		</div>
+
+
+		<div class="btn-group" ngbDropdown>
+			<button type="button" class="btn btn-primary">Split me</button>
+			<button class="btn btn-primary dropdown-toggle-split" ngbDropdownToggle></button>
+			<div class="dropdown-menu" ngbDropdownMenu>
+				<button class="dropdown-item">One</button>
+				<button class="dropdown-item">Two</button>
+				<button class="dropdown-item">Four!</button>
+			</div>
+		</div>
+	</div>
+</div>

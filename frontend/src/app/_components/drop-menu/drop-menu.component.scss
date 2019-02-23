@@ -1,0 +1,77 @@
+@import "../../_styles/variables";
+@import '~bootstrap/scss/bootstrap-grid';
+
+:host {
+    width: 100%;
+}
+
+ul {
+    padding: 0;
+    list-style: none;
+    margin-bottom: 0;
+}
+
+.dropdown-menu {
+    display: block;
+    width: auto;
+    margin-top: 0;
+    left: 100%;
+    top: 0;
+    border: 0;
+}
+
+.dropdown-toggle::after {
+    margin-left: 0.5rem;
+    border-left: 0.3em solid;
+    border-top: 0.3em solid transparent;
+    border-right: 0;
+    border-bottom: 0.3em solid transparent;
+}
+
+.active {
+    border: 0;
+}
+
+.dropdown-nav {
+    li {
+        cursor: pointer;
+        @include media-breakpoint-up(lg) {
+           height: 90px;
+        }
+    }
+    a {
+        display: flex;
+        align-items: center;
+        width: inherit;
+		height: 100%;
+		color: $secondary-color;
+
+		@include media-breakpoint-up(lg) {
+			padding: 0.5rem 0;
+			margin: 0 1rem;
+		}
+
+        @include media-breakpoint-down(md) {
+			border-left: 4px solid transparent;
+		}
+        @include media-breakpoint-up(lg) {
+			border-bottom: 4px solid transparent;
+		 }
+
+
+		&.active {
+			background-color: rgba($white, .2);
+			font-weight: bold;
+			border-color: $lightBlue;
+		}
+        &::after {
+            border-top: 0.3em solid;
+            border-right: 0.3em solid transparent;
+            border-bottom: 0;
+            border-left: 0.3em solid transparent;
+        }
+    }
+
+}
+
+

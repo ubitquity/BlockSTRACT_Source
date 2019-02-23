@@ -1,0 +1,55 @@
+[
+	{
+		"title": "1. Wymagania",
+		"file": "reqs.md"
+	},
+	{
+		"title": "2. Instalacja",
+		"file": "install.md",
+		"children": [
+			{"title": "1. Style", "file": "install/style.md"},
+			{"title": "2. Moduły", "file": "install/modules.md"},
+			{"title": "3. Instalowanie zewnętrznych bibliotek", "file": "install/thirdparty.md"}
+		]
+	},
+	{
+		"title": "3. Build & deploy",
+		"file": "builddeploy.md",
+		"children": [
+			{"title": "1. Srodowiska (env)", "file": "build/envs.md"},
+			{"title": "2. Przygotowanie na produkcje", "file": "build/prodprep.md"}
+		]
+	},
+	{
+		"title": "4. Narzędzia", "file": "tools.md",
+		"children": [
+			{"title": "CLI", "file": "tools/cli.md"},
+			{"title": "Skrypty NPM", "file": "tools/npm.md"},
+			{"title": "TSlint", "file": "tools/tslint.md"},
+			{"title": "Swagger", "file": "tools/swagger.md"},
+			{"title": "Lodash", "file": "tools/lodash.md"},
+			{"title": "Moment", "file": "tools/moment.md"}
+		]
+	},
+	{
+		"title": "5. Use cases & snippets",
+		"file": "usecases.md",
+		"children": [
+			{"title": "1. Routing", "file": "uc/routing.md"},
+			{"title": "2. Translating (i18n)", "file": "uc/i18n.md"},
+			{"title": "3. Formularze", "file": "uc/forms.md"},
+			{"title": "4. Obsługa błędów", "file": "uc/errors.md"},
+			{"title": "5. Walidatory", "file": "uc/validators.md"},
+			{"title": "6. Datepicker", "file": "uc/datepicker.md"},
+			{"title": "7. Modal", "file": "uc/modal.md"},
+			{"title": "8. Dropdown", "file": "uc/modal.md"},
+			{"title": "9. Tooltip", "file": "uc/modal.md"},
+			{"title": "10. Google maps", "file": "uc/maps.md"},
+			{"title": "11. Komunikaty (toastr)", "file": "uc/maps.md"}
+		]
+	},
+	{
+		"title": "6. Styling",
+		"file": "styling.md"
+	}
+]

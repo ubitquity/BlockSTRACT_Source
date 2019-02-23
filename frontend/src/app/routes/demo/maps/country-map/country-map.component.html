@@ -1,0 +1,8 @@
+<ng-container *ngIf="cities != null">
+	<agm-map [latitude]="centerLatitude" [longitude]="centerLongitude"
+	 [zoom]="zoom">
+		<ng-container *ngFor="let city of cities">
+			<agm-marker [latitude]="city.latitude" [longitude]="city.longitude"></agm-marker>
+		</ng-container>
+	</agm-map>
+</ng-container>

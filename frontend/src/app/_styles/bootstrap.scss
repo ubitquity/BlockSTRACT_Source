@@ -1,0 +1,65 @@
+@import '~bootstrap/scss/bootstrap-grid';
+@import 'variables';
+
+
+h1, h2 {
+	border: 0;
+	margin-bottom: 0;
+	padding: 0;
+}
+
+h2 {
+	font-size: 4rem;
+}
+
+h1, .h1 {
+	font-size: 4.7rem;
+}
+
+
+h5, .h5 {
+	font-size: 1.25rem !important;
+}
+
+.btn {
+	border-radius: 0;
+	letter-spacing: 0;
+}
+
+.btn-danger {
+	color: $white;
+}
+
+.navbar-brand {
+	font-size: 1.75rem;
+	margin-right: 0;
+	font-family: Helvetica, Arial, sans-serif;
+	color: #5A6872 !important;
+}
+
+
+.dropdown-menu {
+
+	.dropdown-item {
+		display: flex;
+		align-items: center;
+		white-space: unset;
+	}
+}
+
+.dropdown-toggle.no-arrow:after {
+	content: none;
+}
+
+
+
+
+.collapse {
+	display: none !important;
+}
+
+.shadow {
+	@include media-breakpoint-down(sm) {
+		box-shadow: unset!important;
+	}
+}

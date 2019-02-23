@@ -1,0 +1,32 @@
+<div class="card " *ngIf="showForm">
+	<div class="card-header header-block ">Edit Abstract Rates</div>
+	<div class="card-block">
+		<div *ngFor="let rate of abstractRates" class="row align-items-center no-gutters py-3">
+			<div *ngIf="rate.serviceType?.name" class=" col-sm-6 mb-2 mb-sm-0 mr-2 mr-sm-4">
+				{{rate.serviceType.name}}
+			</div>
+			<div *ngIf="!rate.serviceType?.name" class=" col-sm-6 mb-2 mb-sm-0 mr-2 mr-sm-4">
+					<ng-select [items]="services" placeholder="Select service" [clearable]="false" bindLabel="name" bindValue="id" [(ngModel)]="rate.serviceType.id" clearAllText="Clear">
+					</ng-select>
+			</div>
+			<div class="col mb-0 h5 text-nowrap text-center text-sm-left d-flex align-items-center">
+				$
+				<input type="number" class="form-control ml-1" [(ngModel)]="rate.rate">
+			</div>
+			<div class="d-flex ml-3">
+				<button type="button"  (click)="addRate(rate)" class="btn btn-link p-0 mr-3">
+					<fa-icon class="" size="lg" [icon]="faPlusCircle"></fa-icon>
+				</button>
+				<button type="button" (click)="deleteRate(rate)" [disabled]="abstractRates?.length === 1" class="btn btn-link p-0">
+					<fa-icon class="" size="lg" [icon]="faMinusCircle"></fa-icon>
+				</button>
+			</div>
+		</div>
+
+		<div class="d-flex justify-content-center mt-4">
+			<button (click)="submit()" type="submit" class="btn btn-success btn-lg mr-2">{{'forms.submit' | translate}}</button>
+			<button (click)="modal.close()" class="btn btn-secondary btn-lg">Cancel</button>
+
+		</div>
+	</div>
+</div>

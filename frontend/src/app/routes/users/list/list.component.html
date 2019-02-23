@@ -1,0 +1,79 @@
+<div class="main-wrap d-flex flex-column h-100">
+	<div class="header-block mb-lg-4">
+		<div class="d-block d-lg-none container p-0 position-absolute ">
+			<span class="arrow-back" [routerLink]="prevUrl">
+				<fa-icon class="" [icon]="faAngleLeft"></fa-icon>
+			</span>
+		</div>
+		<h2>Abstractors List</h2>
+	</div>
+	<div class="container">
+		<div class=" my-3 mx-lg-0">
+			<div class="" *ngIf="users">
+				<ngx-datatable [scrollbarH]="scrollBarHorizontal" class="appstract mb-3 bg-white" [rows]="users.content" [columns]="tableColumns"
+				 columnMode="force" [footerHeight]="40" selectionType="row" [selected]="selected" (select)="openDetails($event)"
+				 [externalSorting]="true" (sort)="onSort($event)">
+					<ngx-datatable-footer>
+						<ng-template ngx-datatable-footer-template let-rowCount="rowCount" let-pageSize="pageSize" let-selectedCount="selectedCount"
+						 let-curPage="curPage" let-offset="offset">
+							<div class="d-flex h-100 justify-content-between w-100 pl-md-3">
+								<div class="d-flex align-items-center">
+									<div class="border-right d-md-flex align-items-center h-100">
+										<div class="d-none d-md-block">Items per page: </div>
+										<ng-select class="footer-select" [items]="options.sizes" bindLabel="label" [clearable]="false" placeholder="10"
+										 [searchable]="false" (change)="getUsers(true)" [(ngModel)]="size">
+										</ng-select>
+									</div>
+									<div class="ml-2 text-nowrap">{{size.value * page - size.value + 1}}-{{users.last ? totalElements :
+										(size.value * page)}}
+										of {{totalElements}} items</div>
+								</div>
+								<div class="d-flex align-items-center h-100">
+									<div class="d-none d-md-block mr-3">
+										{{page}} of {{totalPages || 1}} pages
+									</div>
+									<div class="d-flex align-items-center h-100">
+										<button [disabled]="page <= 1" (click)="setPage('prev')" class="pagination-btn left">
+											<fa-icon class="" [icon]="faAngleLeft"></fa-icon>
+										</button>
+										<ng-select class="footer-select" [clearable]="false" placeholder="10" [searchable]="false" (change)="getUsers()"
+										 [(ngModel)]="page">
+											<ng-option *ngFor="let i of pages" [value]="i">{{i}}</ng-option>
+										</ng-select>
+										<button [disabled]="page >= totalPages" (click)="setPage('next')" class="pagination-btn right">
+											<fa-icon class="" [icon]="faAngleRight"></fa-icon>
+										</button>
+									</div>
+								</div>
+							</div>
+						</ng-template>
+					</ngx-datatable-footer>
+				</ngx-datatable>
+
+
+			</div>
+		</div>
+
+	</div>
+</div>
+<ng-template #buttonsColumn let-row="row" let-value="value">
+	<div class="btn-group row">
+		<button class="col-6 btn btn-xs btn-primary" (click)="$event.stopPropagation(); openEditModal(row.id)">
+			<fa-icon class="" [icon]="faEdit"></fa-icon>
+		</button>
+		<button class="col-6 btn btn-xs btn-danger" (click)="$event.stopPropagation(); deleteUser(row.id)">
+			<fa-icon class="" [icon]="faTrash"></fa-icon>
+		</button>
+	</div>
+</ng-template>
+
+<ng-template #activeColumn let-row="row" let-value="value">
+	<fa-icon class="mx-auto text-danger" *ngIf="!row.enabled" size="lg" [icon]="faTimesCircle"></fa-icon>
+	<fa-icon class="mx-auto text-success" *ngIf="row.enabled" size="lg" [icon]="faCheckCircle"></fa-icon>
+</ng-template>
+
+<ng-template #hoursColumn let-row="row" let-value="value">
+		{{row.weeklyHoursAvailability}}
+		<ng-container *ngIf="row.weeklyHoursAvailability && row.weeklyHoursAvailability !== 1 || row.weeklyHoursAvailability === 0"> hours</ng-container>
+		<ng-container *ngIf="row.weeklyHoursAvailability === 1"> hour</ng-container>
+</ng-template>

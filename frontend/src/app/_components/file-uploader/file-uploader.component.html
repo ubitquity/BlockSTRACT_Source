@@ -1,0 +1,58 @@
+<ng-container *ngIf="format === 'classic'">
+	<div class="mb-3 pt-3">
+		<button class="btn btn-sm btn-primary" (click)="fileinput.click()">{{'files.upload' | translate}}</button>
+		<input id="nfile" type="file" class="d-none" #fileinput (change)="updateFiles($event)" [multiple]="multiple" [accept]="acceptString">
+	</div>
+
+	<ng-container *ngIf="files.length && !_reset">
+		<div class="media" *ngFor="let file of files">
+			<img class="mr-3" [src]="file.preview" [alt]="file.name" *ngIf="file.preview" style="max-width: 150px;">
+			<div class="media-body">
+				<h5 class="mt-0">{{ file.name }}</h5>
+				{{( getKb(file.size) ) + 'kb'}}
+			</div>
+		</div>
+	</ng-container>
+</ng-container>
+<ng-container *ngIf="format === 'attachment'">
+	<div class="mr-2 mb-2 text-right">
+		<button type="button" (click)="fileinput.click()" [ngClass]="files?.length ? 'd-none' : 'd-flex'" [ngClass]="{'d-none': files?.length}"
+		 class="small bg-transparent border-0 cursor-pointer p-2 text-blue ml-auto">
+			Choose files to attach
+			<fa-icon class="ml-2" [icon]="faPaperclip"></fa-icon>
+		</button>
+		<button type="button" [disabled]="pending" (click)="reset = true" [ngClass]="files?.length ? 'd-block' : 'd-none'"
+		 class="small bg-transparent border-0 cursor-pointer p-2 text-danger ml-auto ml-auto">
+			Clear files
+			<fa-icon class="ml-1" [icon]="faTimes"></fa-icon>
+
+		</button>
+		<input id="nfile" type="file" class="d-none" #fileinput (change)="updateFiles($event)" [multiple]="multiple" [accept]="acceptString">
+
+
+		<div *ngIf="files.length && !_reset">
+			<div class="media mb-2" *ngFor="let file of files">
+				<div class="media-body">
+					<small class="mt-0 text-black-50 p-2">{{ file.name }} is attached</small>
+				</div>
+			</div>
+		</div>
+	</div>
+</ng-container>
+<ng-container *ngIf="format === 'orders'">
+	<button [disabled]="pending" (click)="fileinput.click()" class="file-box text-primary btn-link d-none d-lg-flex">
+		<div class="text-center">
+			<fa-icon [icon]="faPlusCircle" size="2x"></fa-icon>
+			<div class="mt-1">Upload file</div>
+		</div>
+	</button>
+	<button [disabled]="pending" class="btn btn-primary d-block d-lg-none mx-auto" (click)="fileinput.click()">Add File</button>
+	<input id="nfile" type="file" class="d-none" #fileinput (change)="updateFiles($event)" [multiple]="multiple" [accept]="acceptString">
+</ng-container>
+
+<ng-container *ngIf="format === 'fullfillment'">
+	<button type="button" (click)="fileinput.click()" class="btn btn-primary">
+		{{buttonText}}
+	</button>
+	<input id="nfile" type="file" class="d-none" #fileinput (change)="updateFiles($event)" [multiple]="multiple" [accept]="acceptString">
+</ng-container>

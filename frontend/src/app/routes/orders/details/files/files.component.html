@@ -1,0 +1,44 @@
+<div *ngIf="files?.length || pendingFiles?.length" class="container bg-white shadow p-lg-5 text-secondary flex-grow-1 mb-3 mb-lg-5">
+	<div class="px-2 py-3 p-lg-3 d-flex flex-column flex-wrap flex-lg-row">
+
+		<a *ngFor="let file of files" class="file-box p-2 p-lg-4 mb-3" [href]="file.url" [download]="file.fileName" >
+			<div class="mb-0">{{file.fileName}}</div>
+			<!-- <small class="ml-auto ml-lg-0 mr-3 text-nowrap">{{file.fileSize}}</small>-->
+			<button  *ngIf="order?.internalStatus !== 'PAID'" (click)="deleteFile(file?.id, $event)" class="d-none d-lg-block text-primary btn bg-transparent icon p-0 ml-auto ml-lg-0">
+				<fa-icon class="" size="lg" [icon]="icon"></fa-icon>
+			</button>
+			<button *ngIf="order?.internalStatus !== 'PAID'" (click)="deleteFile(file?.id, $event)" class="d-lg-none btn bg-transparent text-primary icon p-0 ml-auto ml-lg-3">
+				<fa-icon class="" size="lg" [icon]="faMinusCircle"></fa-icon>
+			</button>
+		</a>
+		<a *ngFor="let file of pendingFiles" class="file-box bg-lightGray p-2 p-lg-4 mb-3" style="cursor: default">
+			<div class="mb-0">{{file.name}}</div>
+		</a>
+		<app-file-uploader [pending]="pending" (fileChanges)="fileListener($event)" *ngIf="order?.internalStatus !== 'PAID' && !waitForApproval && (user.role !== 'ABSTRACTOR' ||  !(order.internalStatus === 'PENDING_APPROVAL' || order.internalStatus === 'ACCEPTED' || order.internalStatus === 'PAID'))" [allowed]="['pdf', 'zip', 'jpg', 'jpeg']" multiple="true"
+		 format="orders"></app-file-uploader>
+		 <!-- <button (click)="saveFiles()" class="file-box p-2 p-lg-4 mb-3 d-none d-lg-block">Save files</button>-->
+		 <button *ngIf="waitForApproval" [disabled]="pending" (click)="saveFiles()" class="file-upload text-success bg-white d-none d-lg-block">
+			<div class="text-center">
+				<fa-icon [icon]="faCheckCircle" size="2x"></fa-icon>
+				<div class="mt-1">Save files</div>
+			</div>
+			<div title="Clear files" (click)="$event.preventDefault(); cancelAdding()" class="d-none d-lg-block text-danger btn bg-transparent icon p-0 ml-auto ml-lg-0 small">
+				<fa-icon class="" [icon]="faMinusCircle"></fa-icon>
+				Cancel
+			</div>
+		</button>
+		<div class="d-flex d-lg-none mx-auto" *ngIf="waitForApproval" >
+			<button [disabled]="pending" class="btn btn-success mr-3" (click)="saveFiles()">Save files</button>
+			<button class="btn btn-warning " (click)="cancelAdding()">Cancel</button>
+		</div>
+	</div>
+</div>
+
+<div *ngIf="!showFiles" class="container bg-white shadow p-lg-5 text-secondary flex-grow-1 mb-3 mb-lg-5">
+	<div class="px-2 py-3 p-lg-3 d-flex flex-column flex-wrap flex-lg-row">
+			<app-file-uploader *ngIf="user.role !== 'ABSTRACTOR' || !(order.internalStatus === 'PENDING_APPROVAL' || order.internalStatus === 'ACCEPTED' || order.internalStatus === 'PAID')" (fileChanges)="fileListener($event)" [allowed]="['pdf', 'zip', 'jpg', 'jpeg']" multiple="true"
+			format="orders"></app-file-uploader>
+			<div *ngIf="user.role === 'ABSTRACTOR' && order.internalStatus === 'ACCEPTED' || order.internalStatus === 'PAID'" class="text-muted">	New file can't be added to completed order.</div>
+			<div *ngIf="user.role === 'ABSTRACTOR' && order.internalStatus === 'PENDING_APPROVAL'" class="text-muted">New file can't be added to an order awaiting client's acceptance. </div>
+	</div>
+</div>

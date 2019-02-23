@@ -1,0 +1,7 @@
+{
+  "/appstract-api/**": {
+    "target": "https://lab3.itcraft.pl",
+    "secure": false,
+    "logLevel": "debug"
+  }
+}

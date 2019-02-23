@@ -1,0 +1,81 @@
+
+<div class="d-lg-none flex-column w-50 justify-content-between navbar-collapse bg-white" (click)="clickedInside($event)" [class.collapse]="!toggleTop" >
+	<app-drop-menu></app-drop-menu>
+	<div class="text-center w-100">
+		<div class="mb-2 px-2">Logged in as <a (click)="toggleTop = false" routerLink="/profile"> <u>{{ user.role | titlecase }}</u>  </a></div>
+		<a (click)="logout.logout()" class="d-block mb-3 text-primary"><u>Log out?</u></a>
+		<div (click)="toggleTop = false" class="bg-lightGray py-2 px-4 h5 mb-0 text-right text-primary">
+			&#10094;
+		</div>
+	</div>
+</div>
+
+<div class="d-flex flex-grow-1" [class.mobile-navbar]="toggleTop" >
+
+<nav class="navbar bg-white navbar-expand-lg navbar-light fixed-top px-0 py-2 mt-lg-0 py-lg-0" id="mainnav">
+	<div class="container">
+		<button class="navbar-toggler border-0 d-lg-none collapsed p-0" type="button" aria-expanded="false" (click)="clickedInside($event); toggleTop = true"
+		 [attr.aria-label]="'general.toggleNavigation' | translate">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		<a class="navbar-brand  p-0 pb-0 pb-lg-2" (click)="user ? getNotifications() : null" routerLink="/orders">{{ localName }}</a>
+
+		<div class="navbar-collapse d-none d-lg-block ml-3">
+			<app-drop-menu></app-drop-menu>
+		</div>
+		<div ngbDropdown class="d-inline-block ml-lg-auto mr-lg-4" placement="bottom-right">
+			<button [ngClass]="{'cursor-pointer': notifications?.length}" class="text-darkGray border-0 bg-transparent position-relative outline-0 no-arrow" id="notificationDropdown"
+			 ngbDropdownToggle>
+				<div  *ngIf="notifications?.length"  style="top: -9px;right: -3px;" class="badge badge-danger rounded-circle position-absolute text-white">{{notifications?.length}} </div>
+				<fa-icon [icon]="faBell" size="lg"></fa-icon>
+			</button>
+			<div class="notifications scrollbar" *ngIf="notifications && notifications?.length"  ngbDropdownMenu aria-labelledby="notificationDropdown">
+				<h6 class="pl-4 pt-2 text-primary font-weight-bold ">Activity</h6>
+				<button (click)="checkNotification(notification)" *ngFor="let notification of notifications"  class="dropdown-item p-2 border-bottom">
+					<fa-icon *ngIf="notification.type === 'MESSAGE'" class="mr-2 text-primary" [icon]="faEnvelopeOpen"></fa-icon>
+					<fa-icon *ngIf="
+						notification.type === 'ORDER_DECLINED' || 
+						notification.type === 'ORDER_CANCELLED' || 
+						notification.type === 'ORDER_RECALLED'" 
+					class="mr-2 text-danger" [icon]="faTimesCircle"></fa-icon>
+					<fa-icon *ngIf="
+						notification.type === 'ORDER_OVERDUE' || 
+						notification.type === 'ORDER_INCOMPLETE'"
+					class="mr-2 text-danger" [icon]="faExclamationCircle"></fa-icon>
+					<fa-icon *ngIf="
+						notification.type === 'NEW_ORDER'"
+					class="mr-2 text-success" [icon]="faExclamationCircle"></fa-icon>
+					<fa-icon *ngIf="
+							notification.type === 'ORDER_SUBMITTED_FOR_APPROVAL' || 
+							notification.type === 'ORDER_ACCEPTED_BY_ABSTRACTOR' || 
+							notification.type === 'ORDER_ACCEPTED_BY_ADMIN' || 
+							notification.type === 'ORDER_PAID' || 
+							notification.type === 'ORDER_IN_PROGRESS'" 
+							class="mr-2 text-success" [icon]="faCheckCircle"></fa-icon>
+					<small>{{notification.content}}</small>
+				</button>
+			</div>
+		</div>
+		<div ngbDropdown class=" d-none d-lg-inline-block" placement="bottom-right">
+			<button class="border-0 bg-transparent cursor-pointer outline-0 dropdown-toggle text-primary font-weight-bold" id="dropdownBasic1"
+			 ngbDropdownToggle>
+				{{ user.role | titlecase }}</button>
+			<div class="w-100" ngbDropdownMenu aria-labelledby="dropdownBasic1">
+				<button  class="dropdown-item" [routerLinkActive]="['active']" routerLink="/profile">{{'login.profile' | translate}}</button>
+				<!-- <button *ngIf="user.role === 'ABSTRACTOR'" class="dropdown-item" [routerLinkActive]="['active']" [routerLink]="'/users/details/' + user.id">{{'login.profile' | translate}}</button> -->
+				<button class="dropdown-item" (click)="logout.logout()">{{'login.logout' | translate}}</button>
+			</div>
+		</div>
+	</div>
+</nav>
+
+<div class="container-fluid d-flex flex-column" id="main">
+	<div class="row flex-grow-1">
+		<main class="container-fluid bg-light" role="main" >
+			<router-outlet></router-outlet>
+		</main>
+	</div>
+</div>
+
+</div>

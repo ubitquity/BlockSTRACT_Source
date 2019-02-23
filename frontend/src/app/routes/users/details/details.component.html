@@ -1,0 +1,96 @@
+<div class="main-wrap d-flex flex-column h-100">
+	<div class="header-block mb-lg-4">
+		<div class="d-block  container p-0 position-absolute ">
+			<span class="arrow-back" [routerLink]="prevUrl">
+				<fa-icon class="" [icon]="faAngleLeft"></fa-icon>
+			</span>
+		</div>
+		<h2>Abstractor Profile</h2>
+	</div>
+	<div class="container" *ngIf="abstractor">
+		<div class="row no-gutters my-3">
+			<div class="col-12 col-lg shadow bg-white pb-5 px-3 py-3 mb-2 mb-lg-0 mr-lg-2">
+				<div class="text-primary d-flex justify-content-between border-bottom-primary-lg align-items-center">
+					<h6 class="mb-0 py-4 font-weight-bold ">Account Information</h6>
+				</div>
+				<div class="row align-items-center no-gutters py-3 border-bottom">
+					<div class="col">Name</div>
+					<div class="col">
+						{{abstractor?.firstName}} {{abstractor?.lastName}}
+					</div>
+				</div>
+				<div class="row align-items-center no-gutters py-3 border-bottom">
+					<div class="col">Company Name</div>
+					<div class="col">
+						{{abstractor?.companyName}}
+					</div>
+				</div>
+				<div class="row align-items-center no-gutters py-3 border-bottom">
+					<div class="col">Bank AHC</div>
+					<div class="col">
+						{{abstractor?.bankAccount}}
+					</div>
+				</div>
+				<div class="row no-gutters py-3 border-bottom">
+					<div class="col">Email Address</div>
+					<div class="col">{{abstractor?.email}}</div>
+				</div>
+				<div class="row no-gutters py-3 border-bottom">
+					<div class="col">
+						Weekly Availability</div>
+					<div class="col">{{abstractor?.weeklyAvailability === 0 ? '0' : abstractor?.weeklyAvailability || 'no data'}}
+							<span *ngIf="abstractor?.weeklyAvailability && abstractor?.weeklyAvailability !== 1 || abstractor?.weeklyAvailability === 0"> hours</span>
+							<span *ngIf="abstractor?.weeklyAvailability === 1"> hour</span>
+						</div>
+				</div>
+				<div class="row no-gutters py-3 border-bottom">
+					<div class="col">Countries</div>
+					<div class="col">
+						<ng-container *ngFor="let country of abstractor?.countries; let last = last">
+							{{country}}
+							<span *ngIf="!last">, </span>
+						</ng-container>
+					</div>
+				</div>
+				<div class="row no-gutters py-3 border-bottom">
+					<div class="col">
+						Counties
+					</div>
+					<div class="col">
+						<ng-container *ngFor="let county of abstractor?.counties; let last = last">
+							{{county.name}}
+							<span *ngIf="!last">, </span>
+						</ng-container>
+						<ng-container *ngIf="!abstractor?.counties">no data</ng-container>
+					</div>
+				</div>
+				<div class="row align-items-center no-gutters py-3 border-bottom">
+					<div class="col">Notifications</div>
+					<div class="col">
+						{{abstractor?.notifications ? 'On' : 'Off'}}
+					</div>
+				</div>
+				<div class="row align-items-center no-gutters py-2 border-bottom">
+					<div class="col">Average Rate</div>
+					<div class="col">
+						<ngb-rating [rate]="abstractor?.averageRate" max="5" [readonly]="true">
+							<ng-template let-fill="fill" let-index="index">
+								<span class="star" [class.filled]="fill === 100">&#9733;</span>
+							</ng-template>
+						</ngb-rating>
+					</div>
+				</div>
+			</div>
+			<div class="d-flex flex-column col-lg-6 shadow bg-white pb-3 px-3 py-3">
+				<div class="text-primary d-flex justify-content-between border-bottom-primary-lg align-items-center">
+					<h6 class="mb-0 py-4 font-weight-bold ">Abstract Rates</h6>
+				</div>
+				<div *ngFor="let service of abstractor?.abstractRates" class="row no-gutters py-3 border-bottom">
+					<div class="col mr-3">{{service.serviceType.name}}</div>
+					<div class="col">${{service.rate | number: '0.2-2'}}</div>
+				</div>
+				<div *ngIf="!abstractor?.abstractRates.length" class="text-muted text-center my-4">This abstractor doesn't have any Abstract Rates now.</div>
+			</div>
+		</div>
+	</div>
+</div>

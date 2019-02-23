@@ -1,0 +1,57 @@
+<div class="main-wrap d-flex flex-column h-100" *ngIf="order">
+	<div class="header-block">
+		<div style="z-index: 20" class="d-block  container p-0 position-absolute ">
+			<span class="arrow-back" routerLink="/orders">
+				<fa-icon class="" [icon]="faAngleLeft"></fa-icon>
+			</span>
+		</div>
+		<div class="text-center row no-gutters">
+
+			<span class="col-12 mt-3">
+				ORDER
+			</span>
+			<div class="d-flex flex-column flex-sm-row justify-content-center align-items-center col-12 pb-md-3">
+				<h2 class="mr-3">{{order?.orderNumber}}</h2>
+				<ng-container [ngSwitch]="order.internalStatus">
+					<span *ngSwitchCase="'UNCLAIMED'" class="badge order-status mb-2 mb-sm-0 open" >Unclaimed</span>
+					<span *ngSwitchCase="'UNDER_REVIEW'" class="badge order-status mb-2 mb-sm-0 badge-primary" >Under Review</span>
+					<span *ngSwitchCase="'IN_PROGRESS'" class="badge order-status mb-2 mb-sm-0 warning">In Progress</span>
+					<span *ngSwitchCase="'OVERDUE'" class="badge order-status mb-2 mb-sm-0 danger">Overdue</span>
+					<span *ngSwitchCase="'PENDING_APPROVAL'" class="badge order-status mb-2 mb-sm-0 warning">Pending Approval</span>
+					<span *ngSwitchCase="'ABSTRACT_INCOMPLETE'" class="badge order-status mb-2 mb-sm-0 danger">Incomplete</span>
+					<span *ngSwitchCase="'ACCEPTED'" class="badge order-status mb-2 mb-sm-0 open">Accepted</span>
+					<span *ngSwitchCase="'PAID'" class="badge order-status mb-2 mb-sm-0 success">Paid</span>
+					<span *ngSwitchDefault class="badge order-status mb-2 mb-sm-0 ">{{order.internalStatus | titlecase}}</span>
+
+				</ng-container>
+			</div>
+			<ul class="tab-links d-flex d-md-none flex-grow-1 justify-content-center p-0 mb-0 list-unstyled">
+					<li (click)="changeCurrentTab('overview')" [class.active]="currentTab === 'overview'" class="text-uppercase small mb-3 py-2 text-blue cursor-pointer">Overview</li>
+					<li (click)="changeCurrentTab('fulfillment')" [class.disabled]="user.role === 'ABSTRACTOR' && order.internalStatus === 'UNCLAIMED' || user.role === 'ABSTRACTOR' && order.internalStatus === 'CANCELLED'" [class.active]="currentTab === 'fulfillment'" class="text-uppercase small mb-3 py-2 text-blue cursor-pointer">Fulfillment</li>
+					<li (click)="changeCurrentTab('activity')" *ngIf="user.role === 'ADMIN'" [class.disabled]="user.role === 'ABSTRACTOR' && order.internalStatus === 'UNCLAIMED' || user.role === 'ABSTRACTOR' && order.internalStatus === 'CANCELLED'" [class.active]="currentTab === 'activity'" class="text-uppercase small mb-3 py-2 text-blue cursor-pointer">Activity</li>
+					<li (click)="changeCurrentTab('inbox')" [class.disabled]="user.role === 'ABSTRACTOR' && order.internalStatus === 'UNCLAIMED' || user.role === 'ABSTRACTOR' && order.internalStatus === 'CANCELLED'" [class.active]="currentTab === 'inbox'" class="text-uppercase small mb-3 py-2 text-blue cursor-pointer">Inbox</li>
+					<li (click)="changeCurrentTab('files')" [class.disabled]="user.role === 'ABSTRACTOR' && order.internalStatus === 'UNCLAIMED' || user.role === 'ABSTRACTOR' && order.internalStatus === 'CANCELLED'" [class.active]="currentTab === 'files'" class="text-uppercase small mb-3 py-2 text-blue cursor-pointer">Files</li>
+				</ul>
+		</div>
+	</div>
+	<div class="container d-flex flex-column flex-grow-1">
+		<section class="align-items-center d-none d-md-flex">
+			<ul class="tab-links d-flex flex-grow-1 justify-content-around justify-content-md-start p-0 mb-0 list-unstyled">
+				<li (click)="changeCurrentTab('overview')" [class.active]="currentTab === 'overview'" class="text-uppercase small my-3 py-2 mx-2 mx-md-3 text-secondary cursor-pointer">Overview</li>
+				<li (click)="changeCurrentTab('fulfillment')" [class.disabled]="user.role === 'ABSTRACTOR' && order.internalStatus === 'UNCLAIMED' || user.role === 'ABSTRACTOR' && order.internalStatus === 'CANCELLED'" [class.active]="currentTab === 'fulfillment'" class="text-uppercase small my-3 py-2 mx-2 mx-md-3 text-secondary cursor-pointer">Fulfillment</li>
+				<li (click)="changeCurrentTab('activity')" *ngIf="user.role === 'ADMIN'" [class.disabled]="user.role === 'ABSTRACTOR' && order.internalStatus === 'UNCLAIMED' || user.role === 'ABSTRACTOR' && order.internalStatus === 'CANCELLED'" [class.active]="currentTab === 'activity'" class="text-uppercase small my-3 py-2 mx-2 mx-md-3 text-secondary cursor-pointer">Activity</li>
+				<li (click)="changeCurrentTab('inbox')" [class.disabled]="user.role === 'ABSTRACTOR' && order.internalStatus === 'UNCLAIMED' || user.role === 'ABSTRACTOR' && order.internalStatus === 'CANCELLED'" [class.active]="currentTab === 'inbox'" class="text-uppercase small my-3 py-2 mx-2 mx-md-3 text-secondary cursor-pointer">Inbox</li>
+				<li (click)="changeCurrentTab('files')" [class.disabled]="user.role === 'ABSTRACTOR' && order.internalStatus === 'UNCLAIMED' || user.role === 'ABSTRACTOR' && order.internalStatus === 'CANCELLED'" [class.active]="currentTab === 'files'" class="text-uppercase small my-3 py-2 mx-2 mx-md-3 text-secondary cursor-pointer">Files</li>
+			</ul>
+
+		</section>
+		<div class="mt-4 mt-md-0 flex-grow-1 d-flex flex-column">
+			<app-overview *ngIf="currentTab === 'overview'" (changeTab)="currentTab = $event" [order]="order" (refresh)="getOrder()"></app-overview>
+			<app-fulfillment *ngIf="currentTab === 'fulfillment'" (changeTab)="currentTab = $event" [order]="order" (refresh)="getOrder()"></app-fulfillment>
+			<app-activity *ngIf="currentTab === 'activity'" (changeTab)="currentTab = $event" [order]="order" (refresh)="getOrder()"></app-activity>
+			<app-inbox *ngIf="currentTab === 'inbox'" (changeTab)="currentTab = $event" (refresh)="getOrder()" [order]="order"></app-inbox>
+			<app-files *ngIf="currentTab === 'files'" (changeTab)="currentTab = $event" (refresh)="getOrder()" [order]="order"></app-files>
+		</div>
+
+	</div>
+</div>

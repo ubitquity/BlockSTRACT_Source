@@ -1,0 +1,15 @@
+<app-header name="Maps"></app-header>
+<ng-container *ngIf="ready">
+	<div class="mb-3">
+		<ng-select [items]="nonEmptyCountries" bindLabel="name" placeholder="Select country"
+		 [(ngModel)]="selectedCountry" (change)="countryChanged()">
+		</ng-select>
+	</div>
+
+	<app-country-map [country]="selectedCountry"></app-country-map>
+
+	<div class="mb-3"></div>
+
+	<app-city-form [allCountries]="allCountries" (onSave)="saveCity($event)"
+	 (onDelete)="deleteCity($event)" [disabled]="updating"></app-city-form>
+</ng-container>

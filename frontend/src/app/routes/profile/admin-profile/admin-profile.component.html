@@ -1,0 +1,57 @@
+<div class="main-wrap d-flex flex-column h-100">
+	<div class="header-block mb-lg-4">
+		<div class="d-block d-lg-none container p-0 position-absolute ">
+			<span class="arrow-back" [routerLink]="prevUrl" ><fa-icon class="" [icon]="faAngleLeft"></fa-icon></span>
+		</div>
+		<h2>Admin Profile</h2>
+	</div>
+	<div class="container" *ngIf="profile">
+		<div class="row no-gutters my-3">
+			<div class="col-12 col-lg shadow bg-white pb-5 px-3 py-3 mb-2 mb-lg-0 mr-lg-2">
+				<div class="text-primary d-flex justify-content-between border-bottom-primary-lg align-items-center">
+					<h6 class="mb-0 py-4 font-weight-bold ">Account Information</h6>
+					<button class="btn btn-link" (click)="openEditModal()">
+						<fa-icon class="" [icon]="faEdit"></fa-icon>
+					</button>
+				</div>
+				<div class="row align-items-center no-gutters py-3 border-bottom">
+					<div class="col">Bank AHC</div>
+					<div class="col">
+						{{profile?.bankAccount}}
+					</div>
+				</div>
+				<div class="row no-gutters py-3 border-bottom">
+					<div class="col">Email Address</div>
+					<div class="col">{{profile?.email}}</div>
+				</div>
+				<div class="row align-items-center no-gutters py-3 border-bottom">
+						<div class="col">Notifications</div>
+						<div class="col">
+							{{profile?.notifications ? 'On' : 'Off'}}
+						</div>
+					</div>
+			</div>
+			<!-- <div class="d-none d-lg-block col shadow bg-white pb-5 mx-2 px-3 py-3">
+					<h6 class="mb-0 border-bottom-primary-lg font-weight-bold text-primary py-4">Current Owners</h6>
+					<div class="row no-gutters py-3 border-bottom">
+						<a role="button" class="col cursor-pointer text-primary text-underline">Chris Lusk</a>
+						<a role="button" class="col cursor-pointer text-primary text-underline">Larry Hester</a>
+					</div>
+					<div class="row no-gutters py-3 border-bottom">
+						<a role="button" class="col cursor-pointer text-primary text-underline">Jason Mason</a>
+						<a role="button" class="col cursor-pointer text-primary text-underline">JJ</a>
+					</div>
+					<div class="row no-gutters py-3 border-bottom">
+						<a role="button" class="col cursor-pointer text-primary text-underline">Jessie James</a>
+						<a role="button" class="col cursor-pointer text-primary text-underline"></a>
+					</div>
+				</div> -->
+			<div class="col-12 col-lg-6 shadow bg-white py-4 pb-5 pb-lg-4 px-5 text-center">
+					<h6 class="mb-0 font-weight-bold text-primary py-4 text-left">Retrieve from Qualia</h6>
+					<button (click)="importFromQualia()" class="btn btn-primary  px-5">Import</button>
+					<h6 class="mb-0 font-weight-bold text-success py-4 text-left mt-3">Resend to Qualia</h6>
+					<button class="btn btn-success text-white px-5">Resend</button>
+			</div>
+		</div>
+	</div>
+</div>

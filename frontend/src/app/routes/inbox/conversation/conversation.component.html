@@ -1,0 +1,62 @@
+<div class="w-100 h-100 d-flex flex-column">
+	<div class="header justify-content-lg-between align-items-center py-3 py-lg-4 pr-3">
+		<div class="d-flex w-100 justify-content-between justify-content-lg-start  align-items-center">
+			<div class="d-flex align-items-center p-0 ">
+				<span class="arrow-back" (click)="closeConversation()">
+					<fa-icon class="" [icon]="faAngleLeft"></fa-icon>
+				</span>
+				<h3 class="mb-0 mr-3">{{inbox?.user}}</h3>
+
+			</div>
+			<div class="d-inline mt-1">
+				<span class="font-italic text-nowrap last-message">{{inbox?.lastMessageTime | date: 'h:mm a'}}</span>
+				<button alt="View Order Details" title="View Order Details" class="btn btn-sm btn-success d-lg-none ml-4" [routerLink]="'../../../orders/details/' + inbox?.orderId">
+					<fa-icon class="" size="lg" [icon]="faFileAlt"></fa-icon>
+				</button>
+			</div>
+
+		</div>
+		<button class="d-none d-lg-block btn btn-success mr-3" [routerLink]="'../../../orders/details/' + inbox?.orderId">
+			View Order Details
+		</button>
+
+	</div>
+	<div #conversation class="scrollbar conversation-block bg-white flex-grow-1 px-4 py-3 m-3 mx-sm-0 my-lg-0">
+		<div class="mb-4" *ngFor="let message of inbox?.messages">
+			<div class="d-flex flex-column flex-sm-row justify-content-between">
+				<h5 class="mb-1 mb-sm-0">{{message.sender}}</h5>
+				<div class="small text-muted text-sm-right font-italic d-flex flex-sm-column">
+					<div>{{message.createdAt | date: 'EEEE, MM/dd/yyyy' | titlecase}}</div>
+					<div class="ml-2 ml-sm-0">{{message.createdAt | date: 'h:mm a '}}</div>
+				</div>
+
+			</div>
+			<p class="mb-0">{{message.content}}</p>
+			<div class="w-100 text-right" *ngIf="message.attachments?.length">
+				<a *ngFor="let file of message.attachments" [href]="file.url" [download]="file.fileName" class="d-block small mt-1 text-black-50">{{
+					file.fileName }} is attached <fa-icon class="ml-2" [icon]="faPaperclip"></fa-icon></a>
+			</div>
+		</div>
+		<div class="d-flex align-items-center text-muted" *ngIf="!showMessages">
+			Send message to start a conversation.
+		</div>
+	</div>
+	<form class="bg-secondary py-3 px-4" [formGroup]="form" (submit)="submit()" (keydown)="keyDownFunction($event)">
+		<div class="bg-white mb-2 w-100">
+			<app-form-field [form]="form" field="message">
+				<textarea formControlName="message" class="w-100 p-2 p-sm-3 scrollbar"></textarea>
+			</app-form-field>
+			<div class="d-flex justify-content-end">
+				<app-file-uploader [allowed]="['pdf', 'zip', 'jpg', 'jpeg']" (fileChanges)="fileListener($event)" [pending]="pending" [reset]="resetFiles" class="w-100" multiple="true" format="attachment"></app-file-uploader>
+			</div>
+
+		</div>
+
+
+		<div class="d-flex justify-content-end">
+			<button [disabled]="!form.value.message && !files" type="submit" class="submit-btn btn btn-primary">Send</button>
+		</div>
+
+	</form>
+</div>
+

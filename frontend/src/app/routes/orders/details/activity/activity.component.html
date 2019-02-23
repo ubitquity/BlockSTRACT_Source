@@ -1,0 +1,32 @@
+<div  *ngIf="activities?.length && user.role === 'ADMIN'" class="container bg-white shadow py-3 p-md-5 text-secondary flex-grow-1 mb-3 mb-md-5">
+	<div class="d-none d-md-flex row no-gutters">
+		<div class="col pl-3">
+			<h6 class="font-weight-bold">Action</h6>
+		</div>
+		<div class="col-3 ">
+			<h6 class="font-weight-bold ">User</h6>
+		</div>
+		<div class="col-3 ">
+			<h6 class="font-weight-bold pr-3">Date</h6>
+		</div>
+
+
+	</div>
+	<div class="d-flex flex-wrap no-gutters py-3" (click)="redirect(activity)" *ngFor="let activity of activities" [ngClass]="{'activity-row' : activity.type === 'MESSAGE'}">
+		<div class="col-12 col-md pr-md-3 text-secondary pl-3">
+			{{activity.name}}
+		</div>
+		<div class="col-6 col-md-3 text-black-50 pr-sm-3 pr-md-0 pl-3 pl-md-0">
+			{{activity.user || 'no data'}}
+		</div>
+		<div class="col-12 col-sm col-md-3 text-primary pr-md-3 pl-3 pl-md-0">
+			{{activity.createdAt | date: 'MM/dd/yyyy'}} at {{activity.createdAt | date: 'h:mm a'}}
+		</div>
+	</div>
+
+</div>
+
+
+<div *ngIf="!showActivites" class="container bg-white shadow p-4 p-sm-5 flex-grow-1 mb-5 text-center d-flex flex-column justify-content-center align-items-center">
+	<p>This order doesn't have any activities yet.</p>
+</div>

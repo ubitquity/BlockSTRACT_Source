@@ -1,0 +1,22 @@
+<div class="container">
+	<header class="page-header pt-2 pb-4 text-center">
+		<h1>Error examples</h1>
+	</header>
+
+	<div class="card">
+		<div class="card-block">
+			<button class="btn btn-danger" (click)="getError(400)">400</button>
+			<button class="btn btn-danger" (click)="getError(401)">401</button>
+			<button class="btn btn-danger" (click)="getError(403)">403</button>
+			<button class="btn btn-danger" (click)="getError(404)">404</button>
+			<button class="btn btn-danger" (click)="getError(405)">405</button>
+			<button class="btn btn-danger" (click)="getError(406)">406</button>
+			<button class="btn btn-danger" (click)="getError(416)">416</button>
+			<button class="btn btn-danger" (click)="getError(418)">418</button>
+			<button class="btn btn-danger" (click)="getError(500)">500</button>
+		</div>
+	</div>
+	<pre>
+		{{ err | json }}
+	</pre>
+</div>

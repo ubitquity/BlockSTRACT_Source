@@ -1,0 +1,107 @@
+<div class="main-wrap">
+	<app-header name="<%= classify(name) %> list" class="no-border bg-primary">
+		<div class="mt-4 mr-2 d-inline-block">
+			<button class="btn btn-success btn-lg" routerLink="../create"><i class="fa fa-plus"></i> dodaj</button>
+		</div>
+	</app-header>
+	<section class="filters">
+		<div class="filter size-sm">
+			<h5>Rozmiar listy</h5>
+			<ng-select placeholder="rozmiar"
+					   [items]="options.sizes"
+					   [(ngModel)]="size"
+					   bindValue="value"
+					   [clearable]="false"
+					   [searchable]="false"
+					   (change)="filter({size: $event.value, page: 1})"></ng-select>
+		</div>
+		<div class="filter size-md">
+			<h5>Sortowanie</h5>
+			<ng-select placeholder="rozmiar"
+					   [items]="options.sortingValues"
+					   [(ngModel)]="sort"
+					   bindValue="value"
+					   [clearable]="false"
+					   [searchable]="false"
+					   (change)="filter({sort: $event.value, page: 1})"></ng-select>
+		</div>
+		<div class="filter size-md">
+			<h5>Typ</h5>
+			<ng-select placeholder="rozmiar"
+					   [items]="options.allAnimalTypes"
+					   [(ngModel)]="type"
+					   bindValue="value"
+					   [clearable]="true"
+					   [searchable]="false"
+					   (change)="filter({page: 1, type: $event ? $event.value : ''})"></ng-select>
+		</div>
+		<div class="filter size-lg flex-fill ml-auto">
+			<h5>Wyszukiwanie</h5>
+			<div class="input-group input-group-sm">
+				<input type="text" class="form-control" placeholder="Nazwa" [(ngModel)]="name" (submit)="filter({name: name, page: 1})">
+				<div class="input-group-append" id="button-addon4">
+					<button class="btn btn-dark" type="button" (click)="filter({name: name, page: 1})"><i class="fa fa-search"></i></button>
+					<button class="btn btn-dark" type="button" (click)="filter({name: '', page: 1})"><i class="fa fa-times"></i></button>
+				</div>
+			</div>
+		</div>
+	</section>
+	<section class="content"> <%= dasherize(dowolonyParametr) %>
+		<ng-container *ngIf="<%= dasherize(name) %>">
+			<ngx-datatable #table
+						   [rows]="<%= dasherize(name) %>?.content"
+						   [columnMode]="'force'"
+						   class="mt-3 expandable"
+						   [externalPaging]="true"
+						   [externalSorting]="true"
+						   [rowHeight]="'auto'"
+						   [count]="<%= dasherize(name) %>?.totalElements"
+						   [offset]="<%= dasherize(name) %>?.number"
+						   [limit]="size">
+				<ngx-datatable-row-detail #rowDetail [rowHeight]="150">
+					<ng-template let-row="row" let-expanded="expanded" ngx-datatable-row-detail-template>
+						<div class="expanded-row">
+							<h5>description</h5>
+							<p>{{ row.description }}</p>
+						</div>
+					</ng-template>
+				</ngx-datatable-row-detail>
+				<ngx-datatable-column name="id">
+					<ng-template let-row="row" let-expanded="expanded" ngx-datatable-cell-template>
+						<a
+								href="javascript:void(0)"
+								[class.datatable-icon-right]="!expanded"
+								[class.datatable-icon-down]="expanded"
+								title="Expand/Collapse Row"
+								(click)="table.rowDetail.toggleExpandRow(row)">
+							{{ row.id }}
+						</a>
+					</ng-template>
+				</ngx-datatable-column>
+				<ngx-datatable-column name="name"></ngx-datatable-column>
+				<ngx-datatable-column name="type"></ngx-datatable-column>
+				<ngx-datatable-column name="" cellClass="column-tools">
+					<ng-template  ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row" class="tools">
+						<div class="btn-group">
+							<button class="btn btn-xs btn-subtle" [routerLink]="'../edit/'+row.id"><i class="fa fa-pencil"></i></button>
+							<button class="btn btn-xs btn-subtle"><i class="fa fa-trash-o"></i></button>
+						</div>
+					</ng-template>
+				</ngx-datatable-column>
+			</ngx-datatable>
+			<div class="d-flex justify-content-between mt-3">
+				<h5 class="text-muted mt-2">items: {{ <%= dasherize(name) %>?.totalElements }}</h5>
+				<ngb-pagination
+						*ngIf="<%= dasherize(name) %>?.totalPages > 1"
+						class="d-inline-block"
+						[collectionSize]="<%= dasherize(name) %>?.totalElements"
+						[pageSize]="size"
+						[ellipses]="true"
+						(pageChange)="filter({page: $event})"
+						[(page)]="page" aria-label="Default pagination">
+				</ngb-pagination>
+			</div>
+		</ng-container>
+	</section>
+
+</div>

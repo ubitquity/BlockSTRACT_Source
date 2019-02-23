@@ -1,0 +1,309 @@
+<div class="container" *ngIf="order && ready">
+	<div class="row">
+		<form [formGroup]="fullfillmentForm" class="order-2 order-lg-1 col-12 col-lg pt-4 px-3 px-md-5 mr-lg-4 mb-4 mb-lg-5 bg-white shadow">
+			<h5 class="text-primary text-center mt-1">Parcel IDs</h5>
+			<div class="mb-3" *ngFor="let parcelId of parcelIds">
+				<label class="text-secondary text-uppercase font-weight-bold" for="1">Parcel Id #{{parcelIds.indexOf(parcelId) +
+					1}}</label>
+				<div class="d-sm-flex">
+					<input [readonly]="disableEdit" [(ngModel)]="parcelId.name" [ngModelOptions]="{standalone: true}" id="1" type="text"
+					 class="form-control main w-100" [ngClass]="{'mr-md-5': !disableEdit}">
+					<div *ngIf="!disableEdit" class="d-flex justify-content-center justify-content-sm-end mt-3 mt-sm-0 ml-3 ml-md-0">
+						<button type="button" (click)="addParcelId(parcelId)" class="btn btn-link p-0 mr-3">
+							<fa-icon class="" size="2x" [icon]="faPlusCircle"></fa-icon>
+						</button>
+						<button type="button" (click)="deleteParcelId(parcelId)" [disabled]="parcelIds?.length === 1" class="btn btn-link p-0">
+							<fa-icon class="" size="2x" [icon]="faMinusCircle"></fa-icon>
+						</button>
+					</div>
+				</div>
+			</div>
+			<div class="mt-5 mb-2 text-center">
+				<h5 class="text-primary">Search Effective Date</h5>
+				<p>Enter Time and Date search was completed</p>
+				<div class="row text-left justify-content-center align-items-center align-items-md-end">
+					<div class="d-flex flex-column flex-md-row">
+						<div class="d-block mt-2 mt-md-0 flex-grow-1">
+							<input readonly id="startDate" ngbDatepicker #sd="ngbDatepicker" (click)="!disableEdit ? sd.open() : null" [(ngModel)]="searchDate"
+							 [ngModelOptions]="{standalone: true}" placeholder="mm/dd/yyyy" type="text" class="form-control main">
+						</div>
+					</div>
+					<button type="button" *ngIf="!disableEdit" id="dpBtn" class="btn btn-link p-2" (click)="sd.toggle()">
+						<fa-icon class="" size="lg" [icon]="faCalendarAlt"></fa-icon>
+					</button>
+				</div>
+			</div>
+			<div class="mt-5">
+				<h5 class="text-center text-primary">Deeds</h5>
+				<p class="text-center">For registered land enter a certificate of title and document number.</p>
+				<div *ngFor="let deed of deeds; let index = index" class="row section-border pt-2 pb-3 px-2 mb-md-3 align-items-center">
+					<div class="col-12 col-sm ">
+						<div class="mb-2">
+							<label class="font-weight-bold text-uppercase small" for="">Grantor</label>
+							<input type="text" [readonly]="disableEdit" [(ngModel)]="deed.grantor" [ngModelOptions]="{standalone: true}"
+							 class="form-control main">
+						</div>
+						<div class="mb-2">
+							<label class="font-weight-bold text-uppercase small" for="">Grantee</label>
+							<input type="text" [readonly]="disableEdit" [(ngModel)]="deed.grantee" [ngModelOptions]="{standalone: true}"
+							 class="form-control main">
+						</div>
+						<div class="mb-2 row text-left justify-content-center align-items-center align-items-md-end">
+							<div class="col d-flex flex-column align-items-center flex-md-row">
+								<div class="d-flex align-items-end w-100">
+									<div class="d-block mt-2 mt-md-0 flex-grow-1">
+										<label class="font-weight-bold text-uppercase small" for="documentDate">Document Date</label>
+										<input [readonly]="disableEdit" id="documentDate" ngbDatepicker #d="ngbDatepicker" (click)="!disableEdit ? d.open() : null"
+										 [(ngModel)]="deed.documentDate" [ngModelOptions]="{standalone: true}" placeholder="mm/dd/yyyy" type="text"
+										 class="form-control main">
+									</div>
+									<button type="button" *ngIf="!disableEdit" id="dpBtn" class="btn btn-link px-2 mr-md-3" (click)="d.toggle()">
+										<fa-icon class="" size="lg" [icon]="faCalendarAlt"></fa-icon>
+									</button>
+								</div>
+								<div class="d-flex align-items-end w-100">
+
+									<div class="d-block ml-md-1 mt-2 mt-md-0 flex-grow-1">
+										<label class="font-weight-bold text-uppercase small" for="recordedDate">Recorded Date</label>
+										<input [readonly]="disableEdit" id="recordedDate" ngbDatepicker #r="ngbDatepicker" (click)="!disableEdit ? r.open() : null"
+										 [(ngModel)]="deed.recordedDate" [ngModelOptions]="{standalone: true}" placeholder="mm/dd/yyyy" type="text"
+										 class="form-control main">
+									</div>
+									<button type="button" *ngIf="!disableEdit" id="dpBtn" class="btn btn-link px-2" (click)="r.toggle()">
+										<fa-icon class="" size="lg" [icon]="faCalendarAlt"></fa-icon>
+									</button>
+								</div>
+							</div>
+
+						</div>
+						<div class="mb-2">
+							<label class="font-weight-bold text-uppercase small" for="">Recording Book</label>
+							<input type="text" [readonly]="disableEdit" [(ngModel)]="deed.recordingBook" [ngModelOptions]="{standalone: true}"
+							 class="form-control main">
+						</div>
+						<div class="mb-2">
+							<label class="font-weight-bold text-uppercase small" for="">Recording Page</label>
+							<input type="text" [readonly]="disableEdit" [(ngModel)]="deed.recordingPage" [ngModelOptions]="{standalone: true}"
+							 class="form-control main">
+						</div>
+					</div>
+					<div *ngIf="!disableEdit" class="col-12 col-sm-3 col-md-2 d-flex justify-content-center justify-content-sm-end mt-2 mt-sm-0">
+						<button type="button" (click)="addDeed(deed)" class="btn btn-link p-0 mr-3">
+							<fa-icon class="" size="2x" [icon]="faPlusCircle"></fa-icon>
+						</button>
+						<button type="button" [disabled]="deeds?.length === 1" (click)="deleteDeed(deed)" class="btn btn-link p-0">
+							<fa-icon class="" size="2x" [icon]="faMinusCircle"></fa-icon>
+						</button>
+					</div>
+				</div>
+			</div>
+			<app-form-field [serverErrors]="serverErrors" [form]="fullfillmentForm" field="titleVesting" class="d-block text-center mt-5 mb-3">
+				<h5 class="text-primary">Title Vesting</h5>
+				<p>Enter the title vesting clause for the property.</p>
+				<textarea formControlName="titleVesting" [readonly]="disableEdit" rows="5" placeholder="Text here" class="form-control main"></textarea>
+			</app-form-field>
+			<app-form-field [serverErrors]="serverErrors" [form]="fullfillmentForm" field="legalDescription" class="d-block text-center mt-5 mb-3">
+				<h5 class="text-primary mb-3">Legal Description</h5>
+				<textarea formControlName="legalDescription" [readonly]="disableEdit" rows="5" placeholder="Text here" class="form-control main"></textarea>
+			</app-form-field>
+			<app-form-field [serverErrors]="serverErrors" [form]="fullfillmentForm" field="estateType" class="d-block text-center mt-5 mb-3">
+				<h5 class="text-primary">Estate Type</h5>
+				<p>Enter the estate type of the property</p>
+				<textarea formControlName="estateType" [readonly]="disableEdit" rows="5" placeholder="Text here" class="form-control main"></textarea>
+			</app-form-field>
+			<app-form-field [serverErrors]="serverErrors" [form]="fullfillmentForm" field="outstandingMortgage" class="d-block text-center mt-5 mb-3">
+				<h5 class="text-primary">Outstanding Mortgage</h5>
+				<p>Add details about the mortgage</p>
+				<textarea formControlName="outstandingMortgage" [readonly]="disableEdit" rows="5" placeholder="Text here" class="form-control main"></textarea>
+			</app-form-field>
+
+			<div class="text-center mt-5">
+				<h5 class="text-primary">Title Search Document</h5>
+				<p *ngIf="!titleSearchDocument">No document uploaded</p>
+				<div class="list-unstyled file-list mt-3">
+					<a class="mb-3 pl-2 pr-3" *ngIf="titleSearchDocument && !titleFile?.length" [href]="titleSearchDocument.url"
+					 [download]="titleSearchDocument.fileName">
+						<div class="p-2">{{titleSearchDocument.fileName}}</div>
+						<button *ngIf="!disableEdit" type="button" (click)="deleteFile(null, $event)" class="btn bg-transparent text-primary icon p-0 ml-auto">
+							<fa-icon class="" size="lg" [icon]="faMinusCircle"></fa-icon>
+						</button>
+					</a>
+					<a class="mb-3 pl-2 pr-3 bg-lightGray" *ngFor="let file of titleFile">
+						<div class="p-2">{{file.name}}</div>
+					</a>
+				</div>
+				<div *ngIf="!disableEdit" class="d-flex justify-content-center mt-3">
+					<app-file-uploader *ngIf="!waitForApprovalTitle" (fileChanges)="fileListener($event)" buttonText="Upload File"
+					 [allowed]="['pdf', 'zip', 'jpg', 'jpeg']" format="fullfillment"></app-file-uploader>
+					<div class="d-flex" *ngIf="waitForApprovalTitle">
+						<button type="button" (click)="saveFiles()" class="btn btn-success mr-3">
+							Save file
+						</button>
+						<button type="button" (click)="titleFile = null; waitForApprovalTitle = false" class="btn btn-warning">
+							Cancel
+						</button>
+					</div>
+				</div>
+			</div>
+
+			<app-form-field [serverErrors]="serverErrors" [form]="fullfillmentForm" field="commitmentRequirements" class="d-block text-center mt-5 mb-3">
+				<h5 class="text-primary">Commitment Requirements</h5>
+				<p>Enter requirements for the commitment</p>
+				<textarea formControlName="commitmentRequirements" [readonly]="disableEdit" rows="5" placeholder="Text here" class="form-control main"></textarea>
+			</app-form-field>
+			<app-form-field [serverErrors]="serverErrors" [form]="fullfillmentForm" field="commitmentExceptions" class="d-block text-center mt-5 mb-3">
+				<h5 class="text-primary">Commitment Exceptions</h5>
+				<p>Enter exceptions for the commitment</p>
+				<textarea formControlName="commitmentExceptions" [readonly]="disableEdit" rows="5" placeholder="Text here" class="form-control main"></textarea>
+			</app-form-field>
+			<div class="mt-5 mb-5">
+				<div class="text-center">
+					<h5 class="text-primary">Charges</h5>
+					<p>Your Finalized Billing Below</p>
+				</div>
+				<div *ngFor="let charge of charges; let index = index" class="row section-border pt-2 pb-3 px-2 mb-md-3 align-items-center">
+					<div class="col-12 col-sm ">
+						<label class="font-weight-bold text-uppercase small" for="">Type</label>
+						<ng-select [items]="abstractRates" [clearable]="false" [disabled]="disableEdit" bindLabel="serviceType.name"
+						 [(ngModel)]="charges[index]" (ngModelChange)="changeCharge($event, charge)" [ngModelOptions]="{standalone: true}"
+						 clearAllText="Clear">
+						</ng-select>
+						<div class="row flex-column flex-md-row mt-3">
+							<div class="row no-gutters col-md-8 mb-3 mb-md-0">
+								<div class="col-5 col-sm col-md-5">
+									<label class="font-weight-bold text-uppercase small text-nowrap" for="">Cost per unit</label>
+									<input type="text" readonly [value]="charge.rate" class="form-control main" placeholder="$0.00">
+								</div>
+								<div class="col-2 p-0 mb-3 text-center mt-custom">x</div>
+								<div class="col-5 col-sm col-md-5">
+									<label class="font-weight-bold text-uppercase small text-nowrap" for="">Unit</label>
+									<input type="number" min="1" [(ngModel)]="charge.units" (ngModelChange)="getTotalCost()" [ngModelOptions]="{standalone: true}"
+									 [readonly]="disableEdit || !charge.serviceType.name" class="form-control main" placeholder="1">
+									<div class="text-danger mt-2" *ngIf="charge.units === 0 || charge.units < 0">{{'inlineErrors.zeroValue' |
+										translate}}</div>
+								</div>
+							</div>
+							<div class="col-12 col-md  text-primary text-center text-md-left h5 mb-2 mt-custom-md">
+								${{charge.rate * charge.units | number: '1.2'}}
+							</div>
+						</div>
+					</div>
+					<div *ngIf="!disableEdit" class="col-12 col-sm-3 col-md-2 d-flex justify-content-center justify-content-sm-end mt-2 mt-sm-0">
+						<button type="button" [disabled]="initialRates?.length === charges?.length" (click)="addCharge(charge.id)" class="btn btn-link p-0 mr-3">
+							<fa-icon class="" size="2x" [icon]="faPlusCircle"></fa-icon>
+						</button>
+						<button type="button" [disabled]="charges?.length === 1" (click)="deleteCharge(charge)" class="btn btn-link p-0">
+							<fa-icon class="" size="2x" [icon]="faMinusCircle"></fa-icon>
+						</button>
+					</div>
+				</div>
+
+				<div class="d-flex flex-column flex-md-row mt-4">
+					<div class="mr-md-4 mb-3 mb-md-0">
+						<label class="font-weight-bold text-uppercase small" for="">Type</label>
+						<input readonly type="text" class="form-control main" readonly style="cursor: default" value="Copy Costs">
+					</div>
+
+					<div class="row flex-column flex-md-row">
+						<div class="row no-gutters col-md-8 mb-3 mb-md-0">
+							<div class="col-5 col-sm col-md-5">
+								<app-form-field [serverErrors]="serverErrors" [form]="fullfillmentForm" field="copyCostPerUnit">
+									<label class="font-weight-bold text-uppercase small text-nowrap" for="">Cost per unit</label>
+									<input type="number" min="1" formControlName="copyCostPerUnit" (ngModelChange)="getTotalCost()" [readonly]="disableEdit"
+									 class="form-control main" placeholder="$0.00">
+								</app-form-field>
+							</div>
+							<div class="col-2 p-0 mb-3 text-center mt-custom">x</div>
+							<div class="col-5 col-sm col-md-5">
+								<app-form-field [serverErrors]="serverErrors" [form]="fullfillmentForm" field="copyUnits">
+									<label class="font-weight-bold text-uppercase small text-nowrap" for="">Unit</label>
+									<input type="number" min="1" formControlName="copyUnits" (ngModelChange)="getTotalCost()" [readonly]="disableEdit"
+									 class="form-control main" placeholder="1">
+								</app-form-field>
+							</div>
+						</div>
+						<div class="col-12 col-md text-primary text-center text-md-right h5 mb-2 mt-custom-md">
+							${{fullfillmentForm.controls['copyCostPerUnit'].value * fullfillmentForm.controls['copyUnits'].value | number:
+							'1.2'}}
+						</div>
+					</div>
+				</div>
+
+				<div class="text-center mt-4">
+					Total cost:
+					<div class="text-primary h4 mt-2">
+						${{totalCost | number: '1.2'}}
+					</div>
+				</div>
+
+
+
+				<div *ngIf="!disableEdit" class="d-flex flex-column flex-sm-row justify-content-sm-between mb-4 mb-sm-5">
+					<button [disabled]="disabled || waitForApprovalTitle" (click)="saveOrder()" type="button" class="btn btn-primary mr-sm-4">
+						Save changes
+					</button>
+					<button [disabled]="disabled || !titleSearchDocument || waitForApprovalTitle || fullfillmentForm.invalid" type="submit"
+					 (click)="sendOrderConfirm()" class="btn h5 btn-success mb-0 mt-4 mt-sm-0">
+						<span *ngIf="order.internalStatus !== 'ABSTRACT_INCOMPLETE'">Send for approval</span>
+						<span *ngIf="order.internalStatus === 'ABSTRACT_INCOMPLETE'">Resend for approval</span>
+					</button>
+				</div>
+
+			</div>
+		</form>
+
+		<div class="order-1 order-lg-2 col-12 p-0 col-lg-4">
+			<div class="px-3 px-md-5 px-lg-3 mb-4 mb-lg-5 bg-white shadow ">
+				<h6 class="mb-0 pt-4 pb-3 font-weight-bold text-primary">Full Address</h6>
+				<div class="pb-4">{{order.properties[0]?.flatAddress || 'no data'}}
+				</div>
+
+				<div class="pb-4">
+					<h6 class="mb-0 pt-4 pb-3 font-weight-bold text-primary border-bottom-primary-lg">Additional Info</h6>
+					<div class="row align-items-center no-gutters py-3 border-bottom">
+						<div class="col-5 col-md pr-2">Purpose</div>
+						<div class="col">
+							{{order.purpose || 'no data'}}
+						</div>
+					</div>
+					<div class="row align-items-center no-gutters py-3 border-bottom">
+						<div class="col-5 col-md pr-2">Buyer</div>
+						<div class="col">
+							<ng-container *ngIf="order.borrowers?.length; else noData">
+								<div *ngFor="let borrower of order.borrowers">
+									{{borrower.name}}
+								</div>
+							</ng-container>
+						</div>
+					</div>
+					<div class="row align-items-center no-gutters py-3 border-bottom">
+						<div class="col-5 col-md pr-2">Seller</div>
+						<div class="col">
+							<ng-container *ngIf="order.sellers?.length; else noData">
+								<div *ngFor="let seller of order.sellers">
+									{{seller.name}}
+								</div>
+							</ng-container>
+						</div>
+					</div>
+					<div class="row align-items-center no-gutters py-3 border-bottom">
+						<div class="col-5 col-md pr-2">Parcel ID</div>
+						<div class="col">
+							{{order.parcelID || 'no data'}}
+						</div>
+					</div>
+					<div class="row align-items-center no-gutters py-3 border-bottom">
+						<div class="col-5 col-md pr-2">Lender</div>
+						<div class="col">
+							{{order.lender || 'no data'}}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<ng-template #noData>
+	no data
+</ng-template>

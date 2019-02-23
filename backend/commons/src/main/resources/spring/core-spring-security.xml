@@ -1,0 +1,101 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.2.xsd">
+
+	<!-- REST API public -->
+	<security:http pattern="/" create-session="stateless" use-expressions="true" auto-config="false" entry-point-ref="restServicesEntryPoint">
+		<security:intercept-url pattern="/" access="permitAll" />
+	</security:http>
+	<security:http pattern="/ping" create-session="stateless" use-expressions="true" auto-config="false" entry-point-ref="restServicesEntryPoint">
+		<security:intercept-url pattern="/ping" access="permitAll" />
+	</security:http>
+	<security:http pattern="/login" create-session="stateless" use-expressions="true" auto-config="false" entry-point-ref="restServicesEntryPoint">
+		<security:intercept-url pattern="/login" access="permitAll" />
+		<security:csrf disabled="true"/>
+	</security:http>
+	<security:http pattern="/abstractor/signup" create-session="stateless" use-expressions="true" auto-config="false" entry-point-ref="restServicesEntryPoint">
+		<security:intercept-url pattern="/abstractor/signup" access="permitAll" />
+		<security:csrf disabled="true"/>
+	</security:http>
+	<security:http pattern="/abstractor/activate/*" create-session="stateless" use-expressions="true" auto-config="false" entry-point-ref="restServicesEntryPoint">
+		<security:intercept-url pattern="/abstractor/activate/*" access="permitAll" />
+		<security:csrf disabled="true"/>
+	</security:http>
+	<security:http pattern="/test/**" create-session="stateless" use-expressions="true" auto-config="false" entry-point-ref="restServicesEntryPoint">
+		<security:intercept-url pattern="/test/**" access="permitAll" />
+		<security:csrf disabled="true"/>
+	</security:http>
+	<security:http pattern="/user/is-username-available" create-session="stateless" use-expressions="true" auto-config="false" entry-point-ref="restServicesEntryPoint">
+		<security:intercept-url pattern="/user/is-username-available" access="permitAll" />
+	</security:http>
+	<security:http pattern="/password/*" create-session="stateless" use-expressions="true" auto-config="false" entry-point-ref="restServicesEntryPoint">
+		<security:intercept-url pattern="/password/*" access="permitAll" />
+		<security:csrf disabled="true"/>
+	</security:http>
+	<security:http pattern="/error/**" create-session="stateless" use-expressions="true" auto-config="false" entry-point-ref="restServicesEntryPoint">
+		<security:intercept-url pattern="/error/**" access="permitAll" />
+		<security:csrf disabled="true"/>
+	</security:http>
+	<security:http pattern="/disposable-file/**" create-session="stateless" use-expressions="true" auto-config="false" entry-point-ref="restServicesEntryPoint">
+		<security:intercept-url pattern="/disposable-file/**" access="permitAll" />
+	</security:http>
+	<security:http pattern="/public-file/**" create-session="stateless" use-expressions="true" auto-config="false" entry-point-ref="restServicesEntryPoint">
+		<security:intercept-url pattern="/public-file/**" access="permitAll" />
+	</security:http>
+	<security:http pattern="/resources/**" create-session="stateless" use-expressions="true" auto-config="false" entry-point-ref="restServicesEntryPoint">
+		<security:intercept-url pattern="/resources/**" access="permitAll" />
+	</security:http>
+	<security:http pattern="/resources-commons/**" create-session="stateless" use-expressions="true" auto-config="false" entry-point-ref="restServicesEntryPoint">
+		<security:intercept-url pattern="/resources-commons/**" access="permitAll" />
+	</security:http>
+	
+	<!-- API documentation -->
+	<security:http pattern="/webjars/**" create-session="stateless" use-expressions="true" auto-config="false" entry-point-ref="restServicesEntryPoint">
+		<security:intercept-url pattern="/webjars/**" access="permitAll" />
+	</security:http>
+	<security:http pattern="/swagger-api-json" create-session="stateless" use-expressions="true" auto-config="false" entry-point-ref="restServicesEntryPoint">
+		<security:intercept-url pattern="/swagger-api-json" access="permitAll" />
+	</security:http>
+	<security:http pattern="/swagger-resources/**" create-session="stateless" use-expressions="true" auto-config="false" entry-point-ref="restServicesEntryPoint">
+		<security:intercept-url pattern="swagger-resources/**" access="permitAll" />
+	</security:http>
+	<security:http pattern="/swagger-ui.html" create-session="stateless" use-expressions="true" auto-config="false" entry-point-ref="restServicesEntryPoint">
+		<security:intercept-url pattern="/swagger-ui.html" access="permitAll" />
+	</security:http>
+
+	<!-- REST API secured -->
+	<security:http pattern="/**" create-session="stateless" use-expressions="true" auto-config="false" entry-point-ref="restServicesEntryPoint">
+		<security:intercept-url pattern="/**" access="isAuthenticated()" />
+		<security:custom-filter position="FORM_LOGIN_FILTER" ref="restAuthenticationFilter" />
+		<security:csrf disabled="true"/>
+	</security:http>
+
+	<bean id="restServicesEntryPoint" class="pl.itcraft.appstract.core.security.RestAuthenticationEntryPoint" />
+
+	<bean id="restAuthenticationFilter" class="pl.itcraft.appstract.core.security.RestAuthenticationFilter">
+		<property name="authenticationManager" ref="authenticationManager" />
+	</bean>
+
+	<security:authentication-manager alias="authenticationManager">
+		<security:authentication-provider ref="daoAuthenticationProvider" />
+		<security:authentication-provider ref="restAuthenticationProvider" />
+	</security:authentication-manager>
+
+	<bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
+		<constructor-arg value="4"/>
+	</bean>
+
+	<bean id="daoAuthenticationProvider" class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
+		<property name="passwordEncoder" ref="passwordEncoder" />
+		<property name="userDetailsService" ref="userDetailsService" />
+	</bean>
+	
+	<bean id="restAuthenticationProvider" class="pl.itcraft.appstract.core.security.RestAuthenticationProvider">
+	</bean>
+	
+</beans>

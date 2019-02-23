@@ -1,0 +1,38 @@
+@import "../../../../_styles/variables";
+@import '~bootstrap/scss/bootstrap-grid';
+
+
+.section-border {
+	@include media-breakpoint-up(md) {
+		border: 1px solid $gray-400;
+	}
+
+	@include media-breakpoint-down(sm) {
+		border-bottom: 1px solid $gray-400;
+	}
+}
+
+.file-list {
+	a {
+		width: 100%;
+		height: auto;
+		background-color: #eef4fc;
+		border: 0;
+		display: flex;
+		justify-content: space-between;
+		position: relative;
+		cursor: pointer;
+		z-index: 5;
+	}
+}
+
+.mt-custom {
+	margin-top: 2.5rem;
+}
+
+@include media-breakpoint-up(md) {
+	.mt-custom-md {
+		margin-top: 2.5rem;
+	}
+
+}

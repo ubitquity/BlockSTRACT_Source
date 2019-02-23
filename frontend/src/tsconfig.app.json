@@ -1,0 +1,26 @@
+{
+	"extends": "../tsconfig.json",
+	"compilerOptions": {
+		"outDir": "../out-tsc/app",
+		"baseUrl": ".",
+		"module": "es2015",
+		"types": [],
+		"paths": {
+			"@angular/*": ["../node_modules/@angular/*"],
+			"@decorators/*": ["app/_decorators/*"],
+			"@components/*": ["app/_components/*"],
+			"@modules/*": ["app/_modules/*"],
+			"@routes/*": ["app/_routes/*"],
+			"@services/*": ["app/_services/*"],
+			"@pipes/*": ["app/_pipes/*"],
+			"@guards/*": ["app/_guards/*"],
+			"@models/*": ["app/_interfaces/models/*"],
+			"@interfaces/*": ["app/_interfaces/*"],
+			"@env": ["environments/environment.ts"]
+		}
+	},
+	"exclude": [
+		"test.ts",
+		"**/*.spec.ts"
+	]
+}

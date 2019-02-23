@@ -1,0 +1,57 @@
+<app-header name="Forms demos" class="no-border"></app-header>
+
+<div class="card mb-5">
+	<div class="card-block">
+		<h3 class="pb-3">
+			Single input - reactive
+		</h3>
+		<app-single-input></app-single-input>
+	</div>
+</div>
+
+<div class="card mb-5">
+	<div class="card-block">
+		<h3 class="pb-3">
+			Single input - model
+		</h3>
+		<app-single-input2></app-single-input2>
+	</div>
+</div>
+
+<div class="card mb-5">
+	<div class="card-block">
+		<h3 class="pb-3">Prosty formularz z walidacją #1</h3>
+		<p class="mb-3">Z przykładem obsługi z opóźnieniem</p>
+		<app-simple-form></app-simple-form>
+	</div>
+</div>
+
+<div class="card mb-5">
+	<div class="card-block">
+		<h3 class="pb-3">Prosty formularz z walidacją #2</h3>
+		<p class="mb-3">Z wykorzystaniem naszych komponentów skracających pisanie formularzy</p>
+		<app-simple-form-short></app-simple-form-short>
+	</div>
+</div>
+
+<div class="card mb-5">
+	<div class="card-block">
+		<h3 class="pb-3">Zagnieżdżony formularz z walidacją</h3>
+		<p class="mb-4">Gdy api wymaga zagnieżdżonej struktury</p>
+		<app-nested-form></app-nested-form>
+	</div>
+</div>
+
+
+<div class="card mb-5">
+	<div class="card-block">
+		<h3 class="pb-3">Zmiana zasad walidacji w locie</h3>
+		<ul class="mb-4">
+			<li>metody setValidators oraz clearValidators</li>
+			<li>przydatne, gdy wiele scenariuszy wypełniania formularza</li>
+			<li>np. użytkownik wybiera, że chce fakturę – automatycznie dodajemy walidację do pól związanych z firmą</li>
+		</ul>
+
+		<app-dynamic-validation></app-dynamic-validation>
+	</div>
+</div>

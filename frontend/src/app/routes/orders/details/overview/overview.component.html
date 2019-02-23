@@ -1,0 +1,191 @@
+<div class="container" *ngIf="order">
+	<div class="row">
+		<div class="col-12 px-0 pr-lg-3 col-lg-5 mb-3">
+			<div *ngIf="user.role === 'ABSTRACTOR' && (order.internalStatus === 'UNCLAIMED' || order.internalStatus === 'UNDER_REVIEW')" [ngClass]="{'d-block text-center' : order.internalStatus === 'UNDER_REVIEW', 'd-flex justify-content-center' : order.internalStatus !== 'UNDER_REVIEW'}" class="bg-dark py-5 px-5 mb-2">
+				<button [disabled]="order.ratesEmpty === true" *ngIf="order.internalStatus === 'UNCLAIMED'" (click)="manageOrder('accept')" class="btn btn-primary mr-3 col col-md-3 col-lg">
+					Accept
+				</button>
+				<div *ngIf="user.role === 'ABSTRACTOR' && order.internalStatus === 'UNDER_REVIEW'" class="text-white text-center mb-3">You can decline this order within one hour from accepting.</div>
+				<button (click)="manageOrder('decline')" class="btn btn-outline-light col col-md-3 col-lg">
+					Decline
+				</button>
+			</div>
+			<div *ngIf="user.role === 'ADMIN' && order.internalStatus !== 'PAID'  && order.internalStatus !== 'CANCELLED'" class="bg-dark py-5 px-5 mb-2 row no-gutters flex-column flex-sm-row">
+					<button *ngIf="order.internalStatus === 'PENDING_APPROVAL'" (click)="manageOrder('approve')" class="btn btn-primary col-12 col-sm-5 mx-auto mb-3 mb-sm-4 ">
+						Approve
+					</button>
+					<button *ngIf="order.internalStatus === 'PENDING_APPROVAL'" (click)="manageOrder('incomplete')" class="btn btn-light col-12 col-sm-5 mx-auto mb-3 mb-sm-4">
+						Incomplete
+					</button>
+					<button *ngIf="order.abstractor && order.internalStatus !== 'ACCEPTED'" (click)="manageOrder('recall')" class="btn btn-warning col-12 col-sm-5 mx-auto mb-3 mb-sm-0">
+						Recall
+					</button>
+					<button *ngIf="order.internalStatus !== 'ACCEPTED'" (click)="manageOrder('cancel')" class="btn btn-danger col-12 col-sm-5 mx-auto">
+						Cancel
+					</button>
+
+					<button *ngIf="order.internalStatus === 'ACCEPTED'" (click)="manageOrder('paid')" class="btn btn-success col-12 col-sm-5 mx-auto">
+						Paid
+					</button>
+			</div>
+			<div class="px-3 mb-lg-2 bg-white shadow ">
+				<div class="border-bottom-primary-lg">
+					<h6 class="mb-0 pt-4 pb-3 font-weight-bold text-primary">Properties</h6>
+					<div class="pb-4">{{order.properties[0]?.flatAddress || 'no data'}}
+					</div>
+				</div>
+				<div class="mb-4 mt-2">
+					<div class="row align-items-center no-gutters py-3 border-bottom">
+						<div class="col-5 col-md pr-2">COUNTY</div>
+						<div class="col">
+							{{order.properties[0]?.county || 'no data'}}
+						</div>
+					</div>
+					<div class="row align-items-center no-gutters py-3 border-bottom">
+						<div class="col-5 col-md pr-2">PARCEL IDS</div>
+						<div class="col">
+							{{order.parcelIDs || 'no data'}}
+						</div>
+					</div>
+				</div>
+				<div class="pb-4">
+					<h6 class="mb-0 pt-4 pb-3 font-weight-bold text-primary border-bottom-primary-lg">Additional Info</h6>
+					<div class="row align-items-center no-gutters py-3 border-bottom">
+						<div class="col-5 col-md pr-2">Purpose</div>
+						<div class="col">
+							{{order.purpose || 'no data'}}
+						</div>
+					</div>
+					<div class="row align-items-center no-gutters py-3 border-bottom">
+						<div class="col-5 col-md pr-2">Buyer</div>
+						<div class="col">
+							<ng-container *ngIf="order.borrowers?.length; else noData">
+								<div *ngFor="let borrower of order.borrowers">
+									{{borrower.name}}
+								</div>
+							</ng-container>
+						</div>
+					</div>
+					<div class="row align-items-center no-gutters py-3 border-bottom">
+						<div class="col-5 col-md pr-2">Seller</div>
+						<div class="col">
+							<ng-container *ngIf="order.sellers?.length; else noData">
+								<div *ngFor="let seller of order.sellers">
+									{{seller.name}}
+								</div>
+							</ng-container>
+						</div>
+					</div>
+					<div class="row align-items-center no-gutters py-3 border-bottom">
+						<div class="col-5 col-md pr-2">Parcel ID</div>
+						<div class="col">
+							{{order.parcelID || 'no data'}}
+						</div>
+					</div>
+					<div class="row align-items-center no-gutters py-3 border-bottom">
+						<div class="col-5 col-md pr-2">Lender</div>
+						<div class="col">
+							{{order.lender || 'no data'}}
+						</div>
+					</div>
+
+				</div>
+			</div>
+			<div  *ngIf="user.role !== 'ABSTRACTOR'" class="col bg-white shadow d-none d-lg-block">
+				<h6 class="mb-0 pt-4 font-weight-bold text-primary">Review Abstractor</h6>
+				<ngb-rating class="w-100 justify-content-center pt-3 pb-4" [rate]="order.averageRate" max="5" [readonly]="true">
+					<ng-template let-fill="fill" let-index="index">
+						<span class="star big" [class.filled]="fill === 100">&#9733;</span>
+					</ng-template>
+				</ngb-rating>
+			</div>
+
+		</div>
+		<div class="col-12 col-lg bg-white shadow mb-3 px-lg-5 h-100 pb-4">
+			<h6 class="mb-1 pt-4 font-weight-bold text-primary">Abstractor</h6>
+			<div class="row align-items-center no-gutters py-3">
+				<div class="col-5 col-md pr-2">Assigned abstractor</div>
+				<div class="col">
+					<a *ngIf="user.role !== 'ABSTRACTOR'" [routerLink]="'/abstractors/details/' + order.abstractorId">{{order.abstractor || ''}}</a>
+					<span *ngIf="user.role === 'ABSTRACTOR'">{{order.abstractor || ''}}</span>
+
+					<span *ngIf="!order.abstractor" class="text-primary">Unassigned</span>
+				</div>
+			</div>
+			<h6 class="mb-1 pt-4 font-weight-bold text-primary">Order</h6>
+			<div class="row align-items-center no-gutters py-3 border-bottom">
+				<div class="col-5 col-md pr-2">Purchased</div>
+				<div class="col">
+					<ng-container *ngIf="order.createdDate && order.quotedPrice; else noData">
+						{{(order.createdDate | date: 'MM/dd/yyyy') || 'no data'}} for <span *ngIf="order.quotedPrice">$</span>{{(order.quotedPrice
+						| number: '1.2') || 'no data'}}
+					</ng-container>
+				</div>
+			</div>
+			<div class="row align-items-center no-gutters py-3 border-bottom">
+				<div class="col-5 col-md pr-2">Total Price</div>
+				<div class="col">
+					<span *ngIf="order.price">$</span>{{(order.price | number: '1.2') || 'no data' }}
+				</div>
+			</div>
+			<div class="row align-items-center no-gutters py-3 border-bottom">
+				<div class="col-5 col-md pr-2">Payment Terms</div>
+				<div class="col">
+					{{order.paymentTerms || 'no data'}}
+				</div>
+			</div>
+			<div class="row align-items-center no-gutters py-3 border-bottom">
+				<div class="col-5 col-md pr-2">Due Date</div>
+				<div class="col">
+					<ng-container *ngIf="order.dueDate; else noData">
+						{{order.dueDate | date: 'MM/dd/yyyy'}} at {{order.dueDate | date: 'h:mm a'}}
+					</ng-container>
+
+				</div>
+			</div>
+			<div class="row align-items-center no-gutters py-3 border-bottom">
+				<div class="col-5 col-md pr-2">Projected Close Date</div>
+				<div class="col">
+					<ng-container *ngIf="order.projectedCloseDate; else noData">
+						{{order.projectedCloseDate | date: 'MM/dd/yyyy'}} at {{order.projectedCloseDate | date: 'h:mm a'}}
+					</ng-container>
+				</div>
+			</div>
+			<div class="row align-items-center no-gutters py-3 border-bottom">
+				<div class="col-5 col-md pr-2">Customer</div>
+				<div class="col">
+					{{order.customerName || 'no data'}}
+				</div>
+			</div>
+			<div class="row align-items-center no-gutters py-3 border-bottom">
+				<div class="col-5 col-md pr-2">Customer File</div>
+				<div class="col">
+					{{order.customerOrderNumber || 'no data'}}
+				</div>
+			</div>
+			<div class="row align-items-center no-gutters py-3 border-bottom">
+				<div class="col-5 col-md pr-2">Customer Contact</div>
+				<div class="col">
+					{{order.customerContact || 'no data'}}
+				</div>
+			</div>
+			<div class="row align-items-center no-gutters py-3 border-bottom">
+				<div class="col-5 col-md pr-2">Lender</div>
+				<div class="col">
+					{{order.lender || 'no data'}}
+				</div>
+			</div>
+			<div class="row no-gutters py-3 border-bottom">
+				<div class="col-5 col-md pr-2">Description</div>
+				<div class="col">
+					{{order.productDescription || ''}}
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<ng-template #noData>
+	no data
+</ng-template>

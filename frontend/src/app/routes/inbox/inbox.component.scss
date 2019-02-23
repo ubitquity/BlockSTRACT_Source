@@ -1,0 +1,146 @@
+@import "../../_styles/variables";
+@import '~bootstrap/scss/bootstrap-grid';
+
+.contact-list {
+	padding: 0;
+	list-style: none;
+	margin-bottom: 0;
+
+	li {
+		cursor: pointer;
+
+		width: inherit;
+		height: 100%;
+		color: $secondary-color;
+		padding: 0.8rem 1rem;
+		font-size: 1.1rem;
+
+		border-left: 4px solid transparent;
+
+		.small {
+			font-size: 0.85rem;
+			color: $primary-color;
+		}
+
+
+		&.active, &:hover {
+			background-color: rgba($white, .2);
+			font-weight: bold;
+			border-color: $lightBlue;
+
+			.small {
+				color: $primary-color-hover;
+			}
+		}
+
+		&::after {
+			border-top: 0.3em solid;
+			border-right: 0.3em solid transparent;
+			border-bottom: 0;
+			border-left: 0.3em solid transparent;
+		}
+	}
+
+}
+
+.btn-group > button {
+	font-size: 0.8rem;
+	padding: 0.8rem 0;
+
+	&:first-child {
+		border-radius: 5px 0 0 5px;
+	}
+	&:last-child {
+		border-radius: 0 5px 5px 0;
+	}
+}
+
+// .inbox-list-bg {
+// 	height: 100%;
+// 	background-color: $white;
+
+// 	@include media-breakpoint-down(md) {
+// 		background: transparent;
+
+// 		&>div {
+// 			box-shadow: unset !important;
+// 		}
+// 	}
+// }
+
+.inbox-excerpt {
+
+	@include media-breakpoint-down(md) {
+		background: $white;
+
+		&:not(:last-child) {
+			border-bottom: 1px solid rgba($darkGray, 0.5);
+		}
+
+	}
+
+	&>div {
+		border-left: 12px solid transparent;
+		margin-left: -12px;
+		padding-left: 1rem;
+		transition: 0.3s;
+
+		@include media-breakpoint-down(md) {
+			border-left: 7px solid transparent;
+			margin-left: -7px;
+		}
+	}
+
+	&.unreaded {
+		box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+		transition: 0.3s;
+		z-index: 30;
+		position: relative;
+		margin-bottom: 1rem;
+
+		& > div {
+			border-left: 12px solid $green;
+
+			@include media-breakpoint-down(md) {
+				border-left: 7px solid $green;
+			}
+		}
+
+		&:hover > div {
+			border-left: 12px solid #12a629;
+
+			@include media-breakpoint-down(md) {
+				border-left: 7px solid #12a629;
+			}
+		}
+	}
+
+
+	&:hover {
+		box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+		transition: 0.3s;
+		z-index: 30;
+		position: relative;
+
+		&:not(:last-child) {
+			@include media-breakpoint-down(md) {
+				border-bottom: 1px solid transparent;
+			}
+		}
+	}
+
+	&:hover>div {
+		border-left: 12px solid $lightBlue;
+
+		@include media-breakpoint-down(md) {
+			border-left: 7px solid $lightBlue;
+		}
+	}
+
+	h4 {
+		font-weight: 600;
+		@include media-breakpoint-down(sm) {
+			font-size: 1.2rem;
+		}
+	}
+}

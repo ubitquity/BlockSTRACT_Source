@@ -1,0 +1,28 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd
+		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.2.xsd">
+
+	<!--
+	<security:http pattern="/some-public-resource" create-session="stateless" use-expressions="true" auto-config="false" entry-point-ref="restServicesEntryPoint">
+		<security:intercept-url pattern="/some-public-resource" access="permitAll" />
+		<security:csrf disabled="true"/>
+	</security:http>
+	-->
+	
+	<bean id="userDetailsService" class="pl.itcraft.appstract.commons.security.UserDataService">
+		<constructor-arg name="supportedRoles">
+			<util:list value-type="java.lang.String">
+				<value>ROOT</value>
+				<value>ADMIN</value>
+				<value>ABSTRACTOR</value>
+			</util:list>
+		</constructor-arg>
+	</bean>
+	
+</beans>

@@ -1,0 +1,137 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa-1.8.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
+	
+	<context:component-scan base-package="pl.itcraft.appstract.core">
+		<context:exclude-filter type="annotation" expression="org.springframework.web.bind.annotation.RestController"/>
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+	</context:component-scan>
+	<context:component-scan base-package="pl.itcraft.appstract.commons">
+		<context:exclude-filter type="annotation" expression="org.springframework.web.bind.annotation.RestController"/>
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+	</context:component-scan>
+	
+	<tx:annotation-driven />
+
+	<jpa:repositories base-package="pl.itcraft.appstract.commons" />
+
+	<bean id="contextRefreshListenerBean" class="pl.itcraft.appstract.core.api.ContextRefreshListener" />
+	<bean id="contextClosedListenerBean" class="pl.itcraft.appstract.core.api.ContextClosedListener" />
+
+	<bean name="jsonResponseFilter" class="pl.itcraft.appstract.core.utils.JsonResponseFilter" />
+
+	<bean id="freemarkerConfigFactory"
+		class="org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean">
+		<property name="templateLoaderPath" value="classpath:/templates-mail/" />
+	</bean>
+
+	<bean id="appFlyway" class="pl.itcraft.appstract.core.AppFlyway" init-method="migrate">
+		<property name="table" value="_schema_version" />
+		<property name="validateOnMigrate" value="true" />
+		<property name="initOnMigrate" value="true" />
+		<property name="locations" value="classpath:db/migration" />
+		<property name="dataSource">
+			<bean class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
+				<property name="driverClass" value="${app.datasource.driver}" />
+				<property name="url" value="${app.datasource.jdbcUrl}"/>
+				<property name="username" value="${app.datasource.username}"/>
+				<property name="password" value="${app.datasource.password}"/>
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean" depends-on="appFlyway">
+		<property name="persistenceUnitName" value="AppPersistenceUnit" />
+		<property name="jpaVendorAdapter">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+				<property name="databasePlatform" value="org.hibernate.dialect.PostgreSQLDialect" />
+				<property name="showSql" value="${app.datasource.show_sql}" />
+			</bean>
+		</property>
+		<property name="jpaProperties">
+			<props>
+				<prop key="jadira.usertype.autoRegisterUserTypes">true</prop>
+				<prop key="jadira.usertype.databaseZone">jvm</prop>
+				<prop key="jadira.usertype.javaZone">jvm</prop>
+				<prop key="hibernate.hbm2ddl.auto">validate</prop>
+				
+				<prop key="hibernate.connection.provider_class">com.zaxxer.hikari.hibernate.HikariConnectionProvider</prop>
+				<prop key="hibernate.hikari.driverClassName">${app.datasource.driver}</prop>
+				<prop key="hibernate.hikari.jdbcUrl">${app.datasource.jdbcUrl}</prop>
+				<prop key="hibernate.hikari.dataSource.user">${app.datasource.username}</prop>
+				<prop key="hibernate.hikari.dataSource.password">${app.datasource.password}</prop>
+				<prop key="hibernate.hikari.maximumPoolSize">${app.datasource.cp.maximumPoolSize}</prop>
+				<prop key="hibernate.hikari.minimumIdle">${app.datasource.cp.minimumIdle}</prop>
+				
+				<prop key="org.hibernate.envers.auditTablePrefix"></prop>
+				<prop key="org.hibernate.envers.auditTableSuffix">_ARCHIVE</prop>
+				<prop key="org.hibernate.envers.revision_type_field_name">revType</prop>
+				<prop key="org.hibernate.envers.store_data_at_delete">true</prop>
+			</props>
+		</property>
+		<property name="packagesToScan">
+			<util:list>
+				<value>pl.itcraft.appstract.core.entities</value>
+				<value>pl.itcraft.appstract.commons.entities</value>
+			</util:list>
+		</property>
+	</bean>
+
+	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactory" />
+	</bean>
+
+	<bean
+		class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
+
+	<bean id="messageSource"
+		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="basenames">
+			<array>
+				<value>classpath:messages/core-messages</value>
+				<value>classpath:messages/messages</value>
+			</array>
+		</property>
+		<property name="defaultEncoding" value="UTF-8" />
+		<property name="fallbackToSystemLocale" value="false" />
+		<property name="useCodeAsDefaultMessage" value="true" />
+	</bean>
+
+	<bean id="utilsBean" class="pl.itcraft.appstract.core.utils.UtilsBean" init-method="init">
+		<constructor-arg name="applicationVersion" value="${project.version}" />
+	</bean>
+
+	<bean class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="${app.mail.host}" />
+		<property name="port" value="${app.mail.port}" />
+		<property name="username" value="${app.mail.username}" />
+		<property name="password" value="${app.mail.password}" />
+		<property name="protocol" value="${app.mail.protocol}" />
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.smtp.auth">${app.mail.java_mail.smtp.auth}</prop>
+				<prop key="mail.smtp.ssl.enable">${app.mail.java_mail.smtp.ssl.enable}</prop>
+				<prop key="mail.smtp.ssl.trust">${app.mail.java_mail.smtp.ssl.trust}</prop>
+				<prop key="mail.debug">${app.mail.java_mail.debug}</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="applicationContextUtils" class="pl.itcraft.appstract.core.utils.ApplicationContextUtils"
+		name="applicationContextUtils" />
+
+	<bean class="org.springframework.data.web.config.SpringDataWebConfiguration" />
+
+	<bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" />
+	
+</beans>
